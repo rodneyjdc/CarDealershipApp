@@ -1,29 +1,21 @@
-import React from 'react';
-import  ReactDOM  from 'react-dom';
-import { MemoryRouter } from 'react-router-dom';
-import App from './App';
-import Inventory from './components/Inventory';
- it('renders without crashing', async () => {
-  const div = document.createElement('div');
-  ReactDOM.render(
-    <MemoryRouter>
-      <App />
-    </MemoryRouter>, div);
-  await new Promise(resolve => setTimeout(resolve, 1000));
-});  
+import React from 'react'
+import { shallow } from 'enzyme'
+import Inventory from './components/Inventory'
+import Layout from './components/Layout'
 
-/* it('renders without crashing', async () => {
-  const div = document.createElement('div');
-  
-  
-   ReactDOM.render(
-     <MemoryRouter initialEntries={["/inventory"]} >
-      <Inventory />
-    </MemoryRouter>, div);
+import App from './App'
 
+describe('App', () => {
+  it('renders without crashing', () => {
+    const appWrapper = shallow(<App />);
+  });
 
-  await new Promise(resolve => setTimeout(resolve, 1000));
+  it('renders a Inventory', () => {
+    const appWrapper = shallow(<App />);
+    const layout = appWrapper.find(Layout);
+
+    expect(layout).toHaveLength(1);
+  });
 });
- */
 
  
