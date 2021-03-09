@@ -8,6 +8,8 @@ import registerServiceWorker from './registerServiceWorker';
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
 const rootElement = document.getElementById('root');
 
+// ReactDom.render(element, container)
+// return "mounted element"
 ReactDOM.render(
   <BrowserRouter basename={baseUrl}>
     <App />
