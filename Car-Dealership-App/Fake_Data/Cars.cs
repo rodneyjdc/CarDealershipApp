@@ -1,13 +1,13 @@
 using System;
-using System.Collections.Generic; 
+using System.Collections.Generic;
 
-namespace Car_Dealership_App 
+namespace Car_Dealership_App
 {
 
     class FakeData
     {
-         private static readonly string[] makes = new[]
-        {
+        private static readonly string[] makes = new[]
+       {
             "Ford", "Nesson", "Tesla", "Toyota", "Nio"
         };
 
@@ -28,19 +28,17 @@ namespace Car_Dealership_App
             for (int i = 0; i < 5; i += 1)
             {
                 var rand = new Random();
- 
+
                 var car = new Car();
                 car.Owner = "Owner" + i;
-                car.Make  =  makes[rand.Next(makes.Length)];
-                car.Color =  "blue";
-                car.Model =  models[rand.Next(models.Length)];
-                car.Year = new DateTime(2021);
+                car.Make = makes[rand.Next(makes.Length)];
+                car.Color = "blue";
+                car.Model = models[rand.Next(models.Length)];
+                car.Year = 2008;
                 car.imageUrl = "https://source.unsplash.com/1600x900/?car";
                 car._id = Guid.NewGuid().ToString();
-
                 cars.Add(car);
             }
-
 
             return cars;
         }

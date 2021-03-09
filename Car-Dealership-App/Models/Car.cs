@@ -14,7 +14,7 @@ namespace Car_Dealership_App
 
         public string Model { get; set; }
 
-        public DateTime Year { get; set; }
+        public  int Year { get; set; }
 
         public string Color { get; set; }
 

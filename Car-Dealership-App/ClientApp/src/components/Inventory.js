@@ -14,39 +14,31 @@ export class Inventory extends Component {
     // this.intitializeTestData = this.intitializeTestData.bind(this);
   }
 
-  async componentDidMount() {
+  componentDidMount() 
+  {
     this.intitializeTestData();
-    try {
-      let result = await fetch('https://localhost:5001/api/Inventory', {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Access-Control-Allow-Origin': 'http://localhost:3000',
-          'Access-Control-Allow-Credentials': true,
-          'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-          'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept',
-          'Content-Type': 'application/json'
-        },
-        mode: 'no-cors'
+    fetch("https://localhost:5001/api/Inventory", {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json'         
       }
-      )
-      console.log("result", result)
-      if (!result.ok)
-        throw Error(result.statusText)
-
-
-      let cars = await result.json();
-      console.log("cars", cars)
-      var newcarArray = [...this.state.listedCars, cars]
-      this.setState({
-        // listedCars: this.state.listedCars.push(carOne, carTwo),
-        listedCars: newcarArray,
-        currentCount: newcarArray.length
-      })
-    } catch (e) {
-
-    }
+     // mode: 'no-cors'
+    })
+    .then((result) => result.json())
+    .then( (result)=> this.mergeInventory(result))
+    .catch((e) => console.log(e))  
   }
+
+         
+  mergeInventory(cars){
+    var newcarArray = [...this.state.listedCars, ...cars]
+    this.setState({
+      // listedCars: this.state.listedCars.push(carOne, carTwo),
+      listedCars: newcarArray,
+      currentCount: newcarArray.length
+    })
+  }
+
 
   //.push() returns a length of the array, so newCard is not an array but integer.
   // But because setState is asynchronous, it doesn’t update immediately, 

@@ -33,7 +33,7 @@ export class CustomerCarForm extends Component {
         <h1>Input Car Information</h1>
         <form onSubmit={this.submitCar}>
           <label>Owner: </label>
-          <input type="input" name="owner" placeholder="owner" onChange={this.handleInputChange}></input> 
+          <input type="input" name="owner" placeholder="owner" onChange={this.handleInputChange}></input>
           <label>Make: </label>
           <input name="make" placeholder="make" onChange={this.handleInputChange}></input>
           <label>Model: </label>
