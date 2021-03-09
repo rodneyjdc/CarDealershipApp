@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import CustomerCarForm from './CustomerCarForm';
 
 export class Inventory extends Component {
   static displayName = Inventory.name;
@@ -30,14 +31,24 @@ export class Inventory extends Component {
   }
 
          
-  mergeInventory(cars){
-    var newcarArray = [...this.state.listedCars, ...cars]
-    this.setState({
-      // listedCars: this.state.listedCars.push(carOne, carTwo),
-      listedCars: newcarArray,
-      currentCount: newcarArray.length
-    })
+  mergeInventory = (cars) => {
+    console.log("mergeInventory", cars);
+    console.log("mergeInventory1", this.state);
+    //var newcarArray = [...this.state.listedCars, ...[cars]]
+    console.log("mergeInventory2", this.state.listedCars);
+    // this.setState({
+    //   // listedCars: this.state.listedCars.push(carOne, carTwo),
+    //   listedCars: newcarArray,
+    //   currentCount: newcarArray.length
+    // })
+
+    this.setState(prevState => ({
+      ...prevState,
+      listedCars: this.state.listedCars.concat(cars),
+      currentCount: this.state.listedCars.length,
+    }));
   }
+  
 
 
   //.push() returns a length of the array, so newCard is not an array but integer.
@@ -92,10 +103,14 @@ export class Inventory extends Component {
 
     return (
       <div>
-        <h1>Inventory</h1>
+        <h2>Car Form</h2>
+        <CustomerCarForm addCar={this.mergeInventory}/>
+        <h2>Inventory</h2>
         <p aria-live="polite">Listed Cars: <strong>{this.state.currentCount}</strong></p>
         {this.listCars(this.state.listedCars)}
       </div>
     );
   }
 }
+
+export default Inventory;

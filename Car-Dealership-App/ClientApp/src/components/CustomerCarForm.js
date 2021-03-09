@@ -19,12 +19,13 @@ export class CustomerCarForm extends Component {
         [event.target.name]: event.target.value
       }
     }))
-    console.log(this.state.car)
+    //console.log(this.state.car)
   }
 
   submitCar = (event) => {
     event.preventDefault();
-    console.log(this.state.car);
+    console.log("submitCar", this);
+    this.props.addCar(this.state.car);
   }
 
   render() {
@@ -48,3 +49,5 @@ export class CustomerCarForm extends Component {
     );
   }
 }
+
+export default CustomerCarForm;
