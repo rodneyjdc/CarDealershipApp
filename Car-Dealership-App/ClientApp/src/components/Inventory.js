@@ -5,13 +5,12 @@ export class Inventory extends Component {
   static displayName = Inventory.name;
 
   constructor(props) {
-    console.log("Constructor START");
     super(props);
     this.state = {
       currentCount: 0,
       listedCars: []
     };
-    //this.incrementCounter = this.incrementCounter.bind(this);
+    // this.incrementCounter = this.incrementCounter.bind(this);
     // this.intitializeTestData = this.intitializeTestData.bind(this);
   }
 
@@ -30,7 +29,6 @@ export class Inventory extends Component {
     .catch((e) => console.log(e))  
   }
 
-         
   mergeInventory = (cars) => {
     console.log("mergeInventory", cars);
     console.log("mergeInventory1", this.state);

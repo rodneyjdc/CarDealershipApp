@@ -8,7 +8,8 @@ export class CustomerCarForm extends Component {
   // }
 
   state = {
-    car: {}
+    car: {},
+    formSubmitted: false
   };
 
   handleInputChange = (event) => {
@@ -19,12 +20,10 @@ export class CustomerCarForm extends Component {
         [event.target.name]: event.target.value
       }
     }))
-    //console.log(this.state.car)
   }
 
   submitCar = (event) => {
     event.preventDefault();
-    console.log("submitCar", this);
     this.props.addCar(this.state.car);
   }
 
