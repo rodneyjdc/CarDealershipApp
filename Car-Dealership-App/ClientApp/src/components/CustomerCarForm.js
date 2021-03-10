@@ -31,7 +31,7 @@ export class CustomerCarForm extends Component {
   render() {
     return (
       <div>
-        <h1>Input Car Information</h1>
+        <h2>Car Form</h2>
         <form onSubmit={this.submitCar}>
           <label>Owner: </label>
           <input type="input" name="owner" placeholder="owner" onChange={this.handleInputChange}></input>

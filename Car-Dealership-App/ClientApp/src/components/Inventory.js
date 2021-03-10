@@ -79,7 +79,7 @@ export class Inventory extends Component {
     const cars = [];
     for (let i = 0; i < listedCars.length; i++) {
       cars.push(
-        <div>
+        <div key={i}>
           <p>Car: {i}</p>
           <ul>
             <li>Owner: {listedCars[i].owner}</li>
@@ -103,7 +103,6 @@ export class Inventory extends Component {
 
     return (
       <div>
-        <h2>Car Form</h2>
         <CustomerCarForm addCar={this.mergeInventory}/>
         <h2>Inventory</h2>
         <p aria-live="polite">Listed Cars: <strong>{this.state.currentCount}</strong></p>
