@@ -20,12 +20,27 @@ export class CustomerCarForm extends Component {
         [event.target.name]: event.target.value
       }
     }))
+    //console.log(this.state.car)
   }
 
   submitCar = (event) => {
     event.preventDefault();
+    console.log("submitCar", this);
+  
     this.props.addCar(this.state.car);
   }
+
+  // submitCarTwo = () => {
+  //   //event.preventDefault();
+  //   console.log("submitCar", this);
+  //   this.setState(prevState => {
+  //     ...prevState.state,
+
+  //   });
+  //   this.props.addCar(this.state.car);
+  // }
+
+
 
   render() {
     return (

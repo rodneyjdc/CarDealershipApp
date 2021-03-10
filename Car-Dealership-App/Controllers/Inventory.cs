@@ -20,6 +20,7 @@ namespace Car_Dealership_App.Controllers
         [Route("api/Inventory")] 
         public IEnumerable<Car> Get()
         {
+            
             var myCars = FakeData.getCars();
             return myCars;
         }

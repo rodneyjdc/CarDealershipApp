@@ -7,7 +7,10 @@ export class Inventory extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentCount: 0,
+      user: [{
+        name: "",
+        carsListed: []
+      }],
       listedCars: []
     };
     // this.incrementCounter = this.incrementCounter.bind(this);
@@ -16,7 +19,7 @@ export class Inventory extends Component {
 
   componentDidMount() 
   {
-    this.intitializeTestData();
+    //this.intitializeTestData();
     fetch("https://localhost:5001/api/Inventory", {
       method: 'GET',
       headers: {
@@ -43,7 +46,7 @@ export class Inventory extends Component {
     this.setState(prevState => ({
       ...prevState,
       listedCars: this.state.listedCars.concat(cars),
-      currentCount: this.state.listedCars.length,
+      
     }));
   }
   
@@ -103,7 +106,7 @@ export class Inventory extends Component {
       <div>
         <CustomerCarForm addCar={this.mergeInventory}/>
         <h2>Inventory</h2>
-        <p aria-live="polite">Listed Cars: <strong>{this.state.currentCount}</strong></p>
+        <p aria-live="polite">Listed Cars: <strong>{this.state.listedCars.length}</strong></p>
         {this.listCars(this.state.listedCars)}
       </div>
     );
