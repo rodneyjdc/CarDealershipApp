@@ -57,7 +57,7 @@ describe('Inventory', () => {
   });
 
   // calling function b calls function a
-  it("invokes addCar", () => {
+  it("invoking addCar updates listedCars property of state", () => {
     const appWrapper = shallow(<Inventory />);
     const customerCarForm = appWrapper.find(CustomerCarForm);
     const initialLength = appWrapper.state().listedCars.length;
@@ -72,5 +72,7 @@ describe('Inventory', () => {
         //     expect(customerCarForm.props().addCar).toHaveBeenCalled();
         // }) 
   });
+
+  // simulate
 
 });
