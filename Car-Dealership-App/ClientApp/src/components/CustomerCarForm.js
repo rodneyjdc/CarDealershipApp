@@ -21,7 +21,7 @@ export class CustomerCarForm extends Component {
 
   submitCar = (event) => {
     event.preventDefault();
-    console.log("submitCar", this);
+    //console.log("submitCar", this);
   
     this.props.addCar(this.state.car);
   }

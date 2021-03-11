@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import CustomerCarForm from './CustomerCarForm';
 import { Card, Container, Row } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 export class Inventory extends Component {
   static displayName = Inventory.name;
@@ -8,10 +9,6 @@ export class Inventory extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: [{
-        name: "",
-        carsListed: []
-      }],
       listedCars: []
     };
   }
@@ -30,9 +27,9 @@ export class Inventory extends Component {
   }
 
   mergeInventory = (cars) => {
-    console.log("mergeInventory", cars);
-    console.log("mergeInventory1", this.state);
-    console.log("mergeInventory2", this.state.listedCars);
+    // console.log("mergeInventory", cars);
+    // console.log("mergeInventory1", this.state);
+    // console.log("mergeInventory2", this.state.listedCars);
 
     this.setState(prevState => ({
       ...prevState,
@@ -59,36 +56,42 @@ export class Inventory extends Component {
       listedCars: newcarArray,
       currentCount: newcarArray.length
     },
-      console.log("updated car Arrau", this.state.listedCars)
+      // console.log("updated car Arrau", this.state.listedCars)
     );
   }
 
-
-
   listCars = (listedCars) => {
-    console.log("listedCars", listedCars)
+    // console.log("listedCars", listedCars)
     const cars = [];
     for (let i = 0; i < listedCars.length; i++) {
       cars.push(
         <div key={i}>
-        <Container width="100vh">
-        <Card style={{ width: '30vw' }}>
-          <Card.Body>
-            <Card.Title>Car: {i + 1}</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">Owner: {listedCars[i].owner}</Card.Subtitle>
-            <Card.Text>
-              <Container>
-                <Row>Make: {listedCars[i].make}</Row>
-                <Row>Model: {listedCars[i].model}</Row>
-                <Row>Year: {listedCars[i].year}</Row>
-                <Row>Color: {listedCars[i].color}</Row>
-              </Container>
-            </Card.Text>
-            <Card.Link href="#">Card Link</Card.Link>
-            <Card.Link href="#">Another Link</Card.Link>
-          </Card.Body>  
-        </Card>
-        </Container>
+          <Container width="100vh">
+            <Card style={{ width: '30vw' }}>
+              <Card.Body>
+                <Card.Title>Car: {i + 1}</Card.Title>
+                <Card.Subtitle className="mb-2 text-muted">
+                  <Link to={{
+                    pathname: '/userProfile',
+                    state: {
+                      ownerName: listedCars[i].owner,
+                      carsList: this.state.listedCars
+                    }
+                  }}>Owner: {listedCars[i].owner}</Link>
+                </Card.Subtitle>
+                <Card.Text>
+                  <Container>
+                    <Row>Make: {listedCars[i].make}</Row>
+                    <Row>Model: {listedCars[i].model}</Row>
+                    <Row>Year: {listedCars[i].year}</Row>
+                    <Row>Color: {listedCars[i].color}</Row>
+                  </Container>
+                </Card.Text>
+                <Card.Link href="#">Card Link</Card.Link>
+                <Card.Link href="#">Another Link</Card.Link>
+              </Card.Body>
+            </Card>
+          </Container>
         </div>
       )
     }

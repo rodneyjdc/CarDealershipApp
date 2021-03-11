@@ -16,7 +16,7 @@ describe('CustomerCarForm', () => {
     const mockOnSubmit = jest.fn();
     const appWrapper = shallow(<CustomerCarForm addCar={mockOnSubmit} />);
 
-    appWrapper.find('form').simulate('submit', { preventDefault: () => {} });
+    appWrapper.find('Form').simulate('submit', { preventDefault: () => {} });
 
     expect(mockOnSubmit.mock.calls.length).toEqual(1);
   });
