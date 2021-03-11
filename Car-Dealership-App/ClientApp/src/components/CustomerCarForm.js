@@ -6,7 +6,10 @@ export class CustomerCarForm extends Component {
 
   state = {
     car: {},
-    formSubmitted: false
+    formSubmitted: false,
+    // acceptanceRules: {
+    //   year: 
+    // }
   };
 
   handleInputChange = (event) => {
@@ -22,7 +25,13 @@ export class CustomerCarForm extends Component {
   submitCar = (event) => {
     event.preventDefault();
     //console.log("submitCar", this);
-  
+    // const isValid = validate(this.state.car);
+    // if (isValid) {
+    //   this.props.addCar(this.state.car);
+    // } else {
+    //   alert("Input is not valid.");
+    // }
+    
     this.props.addCar(this.state.car);
   }
 

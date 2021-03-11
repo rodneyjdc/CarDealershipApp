@@ -5,6 +5,7 @@ import { Home } from './components/Home';
 import { FetchData } from './components/FetchData';
 import { Inventory } from './components/Inventory';
 import { UserProfile } from './components/UserProfile';
+import { Login } from './components/Login';
 
 import './custom.css'
 import { CustomerCarForm } from './components/CustomerCarForm';
@@ -19,7 +20,7 @@ export default class App extends Component {
         <Route path='/userProfile' component={UserProfile} />
         <Route path='/inventory' component={Inventory} />
         <Route path='/customerCarForm' component={CustomerCarForm} />
-        <Route path='/fetch-data' component={FetchData} />
+        <Route path='/login' component={Login} />
       </Layout>
     );
   }
