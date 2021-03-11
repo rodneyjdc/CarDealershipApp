@@ -14,7 +14,7 @@ describe('CustomerCarForm', () => {
   // Simulate
   it("expect Submit Button to simulate addCar?", () => {
     //const userCar = { make: 'Cadillac', model: 'DeVille', year: 1998, owner: 'Todd', color: 'Green' };
-    // const appWrapper = shallow(<CustomerCarForm/>);
+    //const appWrapper = shallow(<CustomerCarForm/>);
     // const button = shallow(<CustomerCarForm/>).find('button');
     
     // const mockFunction = jest.fn()
@@ -24,9 +24,9 @@ describe('CustomerCarForm', () => {
     const mockOnSubmit = jest.fn();
     const appWrapper = shallow(<CustomerCarForm addCar={mockOnSubmit} />);
 
-    appWrapper.find('button').simulate('click');
+    appWrapper.find('form').simulate('submit', { preventDefault: () => {} });
 
-    expect(mockOnSubmit).toHaveBeenCalledTimes(0);
+    expect(mockOnSubmit.mock.calls.length).toEqual(1);
 
   });
 
