@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import CustomerCarForm from './CustomerCarForm';
+import { Card, Container, Row } from 'react-bootstrap'
 
 export class Inventory extends Component {
   static displayName = Inventory.name;
@@ -13,43 +14,33 @@ export class Inventory extends Component {
       }],
       listedCars: []
     };
-    // this.incrementCounter = this.incrementCounter.bind(this);
-    // this.intitializeTestData = this.intitializeTestData.bind(this);
   }
 
-  componentDidMount() 
-  {
-    //this.intitializeTestData();
+  componentDidMount() {
+    this.intitializeTestData();
     fetch("https://localhost:5001/api/Inventory", {
       method: 'GET',
       headers: {
-        'Accept': 'application/json'         
+        'Accept': 'application/json'
       }
-     // mode: 'no-cors'
     })
-    .then((result) => result.json())
-    .then( (result)=> this.mergeInventory(result))
-    .catch((e) => console.log(e))  
+      .then((result) => result.json())
+      .then((result) => this.mergeInventory(result))
+      .catch((e) => console.log(e))
   }
 
   mergeInventory = (cars) => {
     console.log("mergeInventory", cars);
     console.log("mergeInventory1", this.state);
-    //var newcarArray = [...this.state.listedCars, ...[cars]]
     console.log("mergeInventory2", this.state.listedCars);
-    // this.setState({
-    //   // listedCars: this.state.listedCars.push(carOne, carTwo),
-    //   listedCars: newcarArray,
-    //   currentCount: newcarArray.length
-    // })
 
     this.setState(prevState => ({
       ...prevState,
       listedCars: this.state.listedCars.concat(cars),
-      
+
     }));
   }
-  
+
 
 
   //.push() returns a length of the array, so newCard is not an array but integer.
@@ -65,7 +56,6 @@ export class Inventory extends Component {
     newcarArray.push(carOne, carTwo);
 
     this.setState({
-      // listedCars: this.state.listedCars.push(carOne, carTwo),
       listedCars: newcarArray,
       currentCount: newcarArray.length
     },
@@ -81,30 +71,36 @@ export class Inventory extends Component {
     for (let i = 0; i < listedCars.length; i++) {
       cars.push(
         <div key={i}>
-          <p>Car: {i}</p>
-          <ul>
-            <li>Owner: {listedCars[i].owner}</li>
-            <li>Make: {listedCars[i].make}</li>
-            <li>Model: {listedCars[i].model}</li>
-            <li>Year: {listedCars[i].year}</li>
-            <li>Color: {listedCars[i].color}</li>
-          </ul>
-        </div>)
+        <Container width="100vh">
+        <Card style={{ width: '30vw' }}>
+          <Card.Body>
+            <Card.Title>Car: {i + 1}</Card.Title>
+            <Card.Subtitle className="mb-2 text-muted">Owner: {listedCars[i].owner}</Card.Subtitle>
+            <Card.Text>
+              <Container>
+                <Row>Make: {listedCars[i].make}</Row>
+                <Row>Model: {listedCars[i].model}</Row>
+                <Row>Year: {listedCars[i].year}</Row>
+                <Row>Color: {listedCars[i].color}</Row>
+              </Container>
+            </Card.Text>
+            <Card.Link href="#">Card Link</Card.Link>
+            <Card.Link href="#">Another Link</Card.Link>
+          </Card.Body>  
+        </Card>
+        </Container>
+        </div>
+      )
     }
     return cars
   }
 
-  // Component.render() gets called when props/state changes
-  // return the virtual DOM
   render() {
-    /* let contents = this.state.loading
-     ? <p><em>Loading...</em></p>
-     : this.listCars(this.state.listedCars);  
-       */
-
     return (
       <div>
-        <CustomerCarForm addCar={this.mergeInventory}/>
+        <CustomerCarForm addCar={this.mergeInventory} />
+        <br></br>
+        <hr></hr>
         <h2>Inventory</h2>
         <p aria-live="polite">Listed Cars: <strong>{this.state.listedCars.length}</strong></p>
         {this.listCars(this.state.listedCars)}

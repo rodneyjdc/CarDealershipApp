@@ -26,20 +26,9 @@ describe('Inventory', () => {
   it("has currentCount property on state", () => {
       const appWrapper = shallow(<Inventory />);
       const appState = appWrapper.state();
-      //expect(appState.currentCount).not.toBeUndefined();
+      
       expect(appState.listedCars).not.toBeUndefined();
   });
-
-//   // Inventory passes mergeInvetory() function to CustomerCarForm
-//   it("passes mergeInventory to CustomerCarForm", () => {
-//       const appWrapper = shallow(<Inventory />);
-//       const customerCarForm = appWrapper.find(CustomerCarForm);
-
-//       // check if functions exists by spying
-
-//       // check for equality
-//       expect(customerCarForm.props().addCar).toBeUndefined;
-//   });
 
   // function a exist
   // check if addCar function exists?
@@ -57,13 +46,10 @@ describe('Inventory', () => {
     const customerCarForm = appWrapper.find(CustomerCarForm);
     const initialLength = appWrapper.state().listedCars.length;
     const sampleCar = { make: 'Cadillac', model: 'DeVille', year: 1998, owner: 'Todd', color: 'Green' };
+    
     customerCarForm.invoke('addCar')(sampleCar);
+    
     expect(appWrapper.state().listedCars.length).toBe(initialLength + 1);
-    //expect(customerCarForm.props().addCar).toHaveBeenCalled();
-        // .then(() => {
-        //    
-        //     expect(customerCarForm.props().addCar).toHaveBeenCalled();
-        // }) 
   });
 
 });

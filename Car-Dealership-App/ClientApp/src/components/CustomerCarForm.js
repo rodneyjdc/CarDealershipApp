@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
+import { Form, Button } from 'react-bootstrap'
 
 export class CustomerCarForm extends Component {
   static displayName = CustomerCarForm.name;
-
-  // constructor(props) {
-  //   super(props);
-  // }
 
   state = {
     car: {},
@@ -20,7 +17,6 @@ export class CustomerCarForm extends Component {
         [event.target.name]: event.target.value
       }
     }))
-    //console.log(this.state.car)
   }
 
   submitCar = (event) => {
@@ -30,35 +26,24 @@ export class CustomerCarForm extends Component {
     this.props.addCar(this.state.car);
   }
 
-  // submitCarTwo = () => {
-  //   //event.preventDefault();
-  //   console.log("submitCar", this);
-  //   this.setState(prevState => {
-  //     ...prevState.state,
-
-  //   });
-  //   this.props.addCar(this.state.car);
-  // }
-
-
-
   render() {
     return (
       <div>
         <h2>Car Form</h2>
-        <form onSubmit={this.submitCar}>
-          <label>Owner: </label>
-          <input type="input" name="owner" placeholder="owner" onChange={this.handleInputChange}></input>
-          <label>Make: </label>
-          <input name="make" placeholder="make" onChange={this.handleInputChange}></input>
-          <label>Model: </label>
-          <input name="model" placeholder="model" onChange={this.handleInputChange}></input>
-          <label>Year: </label>
-          <input name="year" placeholder="year" onChange={this.handleInputChange}></input>
-          <label>Color: </label>
-          <input name="color" placeholder="color" onChange={this.handleInputChange}></input>
-          <button type="submit">Submit</button>
-        </form>
+        <Form onSubmit={this.submitCar}>
+          <Form.Label>Owner: </Form.Label>
+          <Form.Control type="input" name="owner" placeholder="owner" onChange={this.handleInputChange}/>
+          <Form.Label>Make: </Form.Label>
+          <Form.Control type="input"name="make" placeholder="make" onChange={this.handleInputChange} />
+          <Form.Label>Model: </Form.Label>
+          <Form.Control type="input" name="model" placeholder="model" onChange={this.handleInputChange} />
+          <Form.Label>Year: </Form.Label>
+          <Form.Control type="input" name="year" placeholder="year" onChange={this.handleInputChange} />
+          <Form.Label>Color: </Form.Label>
+          <Form.Control type="input" name="color" placeholder="color" onChange={this.handleInputChange} />
+          <br></br>
+          <Button type="submit">Submit</Button>
+        </Form>
       </div>
     );
   }
