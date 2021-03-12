@@ -5,19 +5,21 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux'
-import store from './redux/store'
+import createStore from "./redux/store";
 
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
 const rootElement = document.getElementById('root');
 
+const store = createStore();
+
 // ReactDom.render(element, container)
 // return "mounted element"
-ReactDOM.render(
+ReactDOM.render( <Provider store={store}>
   <BrowserRouter basename={baseUrl}>
-    <Provider store={store}>
+   
       <App />
-    </Provider>
-  </BrowserRouter>,
+   
+  </BrowserRouter> </Provider>,
   rootElement);
 
 registerServiceWorker();

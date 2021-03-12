@@ -5,11 +5,11 @@ import { Home } from './components/Home';
 // import { FetchData } from './components/FetchData';
 import { Inventory } from './components/Inventory';
 import { UserProfile } from './components/UserProfile';
-import { Login } from './components/Login';
+import Login  from './components/Login';
 
 
 import './custom.css'
-import { CustomerCarForm } from './components/CustomerCarForm';
+import CustomerCarForm from './components/CustomerCarForm';
 
 export default class App extends Component {
   static displayName = App.name;

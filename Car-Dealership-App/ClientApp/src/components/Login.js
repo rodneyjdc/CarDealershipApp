@@ -1,23 +1,39 @@
 import React from "react";
-import { Container, Form, Button, Row, Col } from 'react-bootstrap'
+import { Container, Form, Button,  Row, Col } from 'react-bootstrap'
 import { Card } from "react-bootstrap";
+import {connect} from "react-redux";
+import {changeUSERNAME } from "../redux/store"
 
-export class Login extends React.Component {
+class Login extends React.Component {
     state = {
         userName: "",
         password: "",
     };
 
     updateInput = (event) => {
+        
+
         this.setState({ 
             [event.target.name]: event.target.value
         });
-        console.log('Name: ',event.target.name);
-        console.log('Value: ',event.target.value);
-        console.log('State: ',this.state);
+        
+              
     };
 
+    /* handleLogin = () =>{
+       //this.props.changeUSERNAME(this.state.userName); 
+       this.props.dispatch(changeUSERNAME(this.state.userName));
+
+
+       this.setState({ 
+           userName: "",
+           password: ""
+        });
+    } */
+
     render() {
+        console.log(this.props);
+        //console.log("this.props.username", this.props.username);
         return (
             <div>
                 <Container>
@@ -39,8 +55,8 @@ export class Login extends React.Component {
                                          name="password" />
                                     </Form>
                                 </Card.Body>
-                                <Card.Footer><Button onClick={this.handleLogin}>Log In</Button></Card.Footer>
-                            </Card>
+                               <Card.Footer><Button onClick={() => this.props.dispatch(changeUSERNAME(this.state.userName))}>Log In</Button></Card.Footer>
+                         </Card>
                         </Col>
                     </Row>
 
@@ -50,4 +66,22 @@ export class Login extends React.Component {
         )
     }
 }
-export default Login;
+//export default Login;
+
+function mapStoreToProps(store) {
+
+    console.log(store.username);
+  return {
+    username: store.username,
+  };
+}
+
+///const mapDispatchToProps = { changeUSERNAME };
+
+/* const mapDispatchToProps = dispatch => {
+    console.log(dispatch)
+  return {
+    changeUSERNAME: userName => dispatch(changeUSERNAME(userName))
+  }} */
+
+export default connect(mapStoreToProps)(Login);

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap'
-
-export class CustomerCarForm extends Component {
+import { connect } from "react-redux";
+class CustomerCarForm extends Component {
   static displayName = CustomerCarForm.name;
 
   state = {
@@ -36,9 +36,12 @@ export class CustomerCarForm extends Component {
   }
 
   render() {
+
+    console.log( this.props.username)
+    console.log(this.props);
     return (
       <div>
-        <h2>Car Form</h2>
+        <h2>Car Form {this.props.username}</h2>
         <Form onSubmit={this.submitCar}>
           <Form.Label>Owner: </Form.Label>
           <Form.Control type="input" name="owner" placeholder="owner" onChange={this.handleInputChange}/>
@@ -58,4 +61,10 @@ export class CustomerCarForm extends Component {
   }
 }
 
-export default CustomerCarForm;
+function mapStateToProps(state) {
+  return {
+    username: state.username,
+  };
+}
+
+export default connect(mapStateToProps)(CustomerCarForm); 

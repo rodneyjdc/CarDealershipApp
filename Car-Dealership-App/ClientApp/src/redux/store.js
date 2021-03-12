@@ -1,14 +1,16 @@
-import { createStore as reduxCreateStore, applyMiddleware } from "redux";
+import { createStore as reduxCreateStore, applyMiddleware } from "redux";  //
 import { composeWithDevTools } from "redux-devtools-extension";
 
+
+
 // action types
-export const LANG = "LANG"
+export const USERNAME = "USERNAME"
 
 
 
 // action creators
-export function changeLANG(val) {
-    return { type: LANG, val }
+export function changeUSERNAME(val) {
+  return { type: USERNAME, val };
 }
 
 
@@ -16,23 +18,24 @@ export function changeLANG(val) {
 // reducer
 const reducer = (state, action) => {
     switch (action.type) {
-        case LANG:
-            return {
-                ...state,
-                lang: action.val
-            }
-        default:
-            return state;
+      case USERNAME:
+        return {
+          ...state,
+          username: action.val,
+        };
+      default:
+        return state;
     }
 }
 
 
 // initial state
 const initialState = {
-    lang: 'none',
+    username: 'none',
 }
 
 // store
 const createStore = () =>
     reduxCreateStore(reducer, initialState, composeWithDevTools(applyMiddleware()));
+    
 export default createStore;
