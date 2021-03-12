@@ -8,6 +8,15 @@ export class Login extends React.Component {
         password: "",
     };
 
+    updateInput = (event) => {
+        this.setState({ 
+            [event.target.name]: event.target.value
+        });
+        console.log('Name: ',event.target.name);
+        console.log('Value: ',event.target.value);
+        console.log('State: ',this.state);
+    };
+
     render() {
         return (
             <div>
@@ -19,12 +28,18 @@ export class Login extends React.Component {
                                 <Card.Header>Login Page</Card.Header>
                                 <Card.Body>
                                     <Form>
-                                        <Form.Control type="input" placeholder="username" />
+                                        <Form.Control type="input" placeholder="username" 
+                                        onChange={e => this.updateInput(e)}
+                                    //    value={this.state.input} 
+                                        name="userName" />
                                         <br></br>
-                                        <Form.Control type="password" placeholder="password" />
+                                        <Form.Control type="password" placeholder="password"
+                                         onChange={e => this.updateInput(e)}
+                                        //  value={this.state.input}
+                                         name="password" />
                                     </Form>
                                 </Card.Body>
-                                <Card.Footer><Button>Log In</Button></Card.Footer>
+                                <Card.Footer><Button onClick={this.handleLogin}>Log In</Button></Card.Footer>
                             </Card>
                         </Col>
                     </Row>

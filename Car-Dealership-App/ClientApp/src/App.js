@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { Route } from 'react-router';
 import { Layout } from './components/Layout';
 import { Home } from './components/Home';
-import { FetchData } from './components/FetchData';
+// import { FetchData } from './components/FetchData';
 import { Inventory } from './components/Inventory';
 import { UserProfile } from './components/UserProfile';
 import { Login } from './components/Login';
+
 
 import './custom.css'
 import { CustomerCarForm } from './components/CustomerCarForm';
