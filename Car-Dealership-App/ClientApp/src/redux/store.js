@@ -26,6 +26,16 @@ export function changeLOGINSTATUS(val) {
 return { type: ISLOGIN, val };
 }
 
+// let nextRule = 0;
+// export function changeRULES(val) {
+//   return { 
+//     type: ACCEPTANCERULES, 
+//     payload: {
+//       id: ++nextRule,
+//       val
+//     }};
+//   }
+
 export function changeRULES(val) {
   return { type: ACCEPTANCERULES, val };
   }
@@ -53,7 +63,7 @@ const reducer = (state, action) => {
         case ACCEPTANCERULES:
         return {
           ...state,
-          acceptanceRules: action.val,
+          acceptanceRules: state.acceptanceRules.concat([action.val]),
         };
       default:
         return state;
@@ -66,7 +76,7 @@ const initialState = {
     username: undefined,
     isAdmin: false,
     isLogin: false,
-    acceptanceRules: undefined
+    acceptanceRules: []
 }
 
 // store

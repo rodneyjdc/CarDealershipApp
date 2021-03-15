@@ -154,9 +154,9 @@ class AcceptanceRules extends Component {
   }
 
   render() {
-    console.log("Make: ", this.state.make);
-    console.log("Model: ", this.state.model);
-    console.log("Year ", this.state.year);
+    // console.log("Make: ", this.state.make);
+    // console.log("Model: ", this.state.model);
+    // console.log("Year ", this.state.year);
     return (
       <div>
         <h2>Acceptance Rules Form </h2>
