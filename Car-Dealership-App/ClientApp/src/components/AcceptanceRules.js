@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
 import { Form, Button, Dropdown } from 'react-bootstrap'
 import DropdownButton from 'react-bootstrap/DropdownButton'
-import { isTemplateSpan } from 'typescript';
+import { connect } from "react-redux";
+import { changeRULES } from '../redux/store';
 
 class AcceptanceRules extends Component {
   static displayName = AcceptanceRules.name;
 
   state = {
-    
+
     formSubmitted: false,
     make: "",
     model: "",
+    year: 0,
     modelsList: [],
     makesList: []
+
   };
 
   componentDidMount() {
@@ -92,30 +95,73 @@ class AcceptanceRules extends Component {
     }));
   }
 
+  setYear = (event) => {
+    event.persist();
+    this.setState(prevState => ({
+      ...prevState,
+      [event.target.name]: event.target.value
+    }))
+  }
+
   displayModel = () => {
     this.getModelsOfMake(this.state.make);
     //console.log("inside displayModel ",this.state.modelsList);
     return (
-      <DropdownButton
-        title="Choose a Model"
-        type="input"
-        name="model"
-        placeholder="model"
-      >
-        {this.state.modelsList.map(elt => {
-          return (<Dropdown.Item eventKey={elt} onSelect={(event) => this.setModel(event)}> {elt} </Dropdown.Item>)
-        })}
-      </DropdownButton>
+      <>
+        <Form.Label>Model: </Form.Label>
+        <DropdownButton
+          title="Choose a Model"
+          type="input"
+          name="model"
+          placeholder="model"
+        >
+          {this.state.modelsList.map(elt => {
+            return (<Dropdown.Item eventKey={elt} onSelect={(event) => this.setModel(event)}> {elt} </Dropdown.Item>)
+          })}
+        </DropdownButton>
+      </>
     )
   }
 
+  displayYear = () => {
+    return (
+      <>
+        <Form.Label>Year: </Form.Label>
+        <Form.Control type="input" name="year" placeholder="year"
+          onChange={this.setYear} />
+      </>
+    )
+  }
+
+  displayButton = () => {
+    return (
+      <>
+        <p>{this.state.make}</p>
+        <p>{this.state.model}</p>
+        <p>{this.state.year}</p>
+        <Button type="submit">Submit</Button>
+      </>
+    )
+  }
+
+  submitAcceptanceRule = (event) => {
+    event.preventDefault();
+    const rule = {
+      model: this.state.model,
+      year: this.state.year
+    };
+    this.props.dispatch(changeRULES(rule));
+  }
+
   render() {
-    //console.log("Make: ", this.state.make);
-    //console.log("Model: ", this.state.model);
+    console.log("Make: ", this.state.make);
+    console.log("Model: ", this.state.model);
+    console.log("Year ", this.state.year);
     return (
       <div>
-        <h2>Acceptance Rules Form {this.props.username}</h2>
-        <Form onSubmit={this.submitCar}>
+        <h2>Acceptance Rules Form </h2>
+        <p><em>*Currently manufacturer is hardcoded to be Honda*</em></p>
+        <Form onSubmit={this.submitAcceptanceRule}>
           <Form.Label>Make: </Form.Label>
           <DropdownButton
             title="Choose a Make"
@@ -128,21 +174,23 @@ class AcceptanceRules extends Component {
             })}
           </DropdownButton>
           <br></br>
-          <Form.Label>Model: </Form.Label>
-
-          {/* {this.state.make && this.displayModel()} */}
-          {this.state.make ? this.displayModel()
-            : (<h3>Please choose a make</h3>)}
-
+          {this.state.make && this.displayModel()}
           <br></br>
-          <Form.Label>Year: </Form.Label>
-          <Form.Control type="input" name="year" placeholder="year" />
+          {this.state.model && this.displayYear()}
           <br></br>
-          <Button type="submit">Submit</Button>
+
+          {this.state.make && this.state.model && this.displayButton()}
         </Form>
       </div>
     );
   }
 }
 
-export default AcceptanceRules;
+function mapStateToProps(state) {
+  return {
+    username: state.username,
+    acceptanceRules: state.acceptanceRules
+  };
+}
+
+export default connect(mapStateToProps)(AcceptanceRules); 

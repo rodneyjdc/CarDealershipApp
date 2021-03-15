@@ -10,6 +10,7 @@ export const ISADMIN = "ISADMIN"
 
 export const ISLOGIN = "ISLOGIN"
 
+export const ACCEPTANCERULES = "ACCEPTANCERULES"
 
 
 // action creators
@@ -24,6 +25,10 @@ export function changeADMINSTATUS(val) {
 export function changeLOGINSTATUS(val) {
 return { type: ISLOGIN, val };
 }
+
+export function changeRULES(val) {
+  return { type: ACCEPTANCERULES, val };
+  }
 
 
 
@@ -45,6 +50,11 @@ const reducer = (state, action) => {
           ...state,
           login: action.val,
         };
+        case ACCEPTANCERULES:
+        return {
+          ...state,
+          acceptanceRules: action.val,
+        };
       default:
         return state;
     }
@@ -55,7 +65,8 @@ const reducer = (state, action) => {
 const initialState = {
     username: undefined,
     isAdmin: false,
-    isLogin: false
+    isLogin: false,
+    acceptanceRules: undefined
 }
 
 // store
