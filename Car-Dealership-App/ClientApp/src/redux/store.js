@@ -6,11 +6,23 @@ import { composeWithDevTools } from "redux-devtools-extension";
 // action types
 export const USERNAME = "USERNAME"
 
+export const ISADMIN = "ISADMIN"
+
+export const ISLOGIN = "ISLOGIN"
+
 
 
 // action creators
 export function changeUSERNAME(val) {
   return { type: USERNAME, val };
+}
+
+export function changeADMINSTATUS(val) {
+    return { type: ISADMIN, val };
+}
+
+export function changeLOGINSTATUS(val) {
+return { type: ISLOGIN, val };
 }
 
 
@@ -23,6 +35,16 @@ const reducer = (state, action) => {
           ...state,
           username: action.val,
         };
+        case ISADMIN:
+            return {
+              ...state,
+              isAdmin: action.val,
+        };
+        case ISLOGIN:
+        return {
+          ...state,
+          login: action.val,
+        };
       default:
         return state;
     }
@@ -31,7 +53,9 @@ const reducer = (state, action) => {
 
 // initial state
 const initialState = {
-    username: 'none',
+    username: undefined,
+    isAdmin: false,
+    isLogin: false
 }
 
 // store

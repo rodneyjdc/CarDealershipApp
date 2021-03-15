@@ -2,7 +2,8 @@ import React from "react";
 import { Container, Form, Button,  Row, Col } from 'react-bootstrap'
 import { Card } from "react-bootstrap";
 import {connect} from "react-redux";
-import {changeUSERNAME } from "../redux/store"
+import {changeADMINSTATUS, changeLOGINSTATUS, changeUSERNAME } from "../redux/store"
+import { Redirect } from "react-router";
 
 class Login extends React.Component {
     state = {
@@ -20,21 +21,37 @@ class Login extends React.Component {
               
     };
 
-    /* handleLogin = () =>{
+    handleLogin = () =>{
+        console.log(this.props);
        //this.props.changeUSERNAME(this.state.userName); 
        this.props.dispatch(changeUSERNAME(this.state.userName));
 
+       if(this.state.userName === 'Laura' || this.state.userName === 'laura'){
+        this.props.dispatch(changeADMINSTATUS(true));
+        this.props.dispatch(changeLOGINSTATUS(true));
+       } else{
+        this.props.dispatch(changeLOGINSTATUS(true));
+       }
 
        this.setState({ 
            userName: "",
            password: ""
         });
-    } */
+    }
 
     render() {
         console.log(this.props);
-        //console.log("this.props.username", this.props.username);
-        return (
+        console.log("this.props.username", this.props.username);
+        return  this.props.username ? 
+        (
+            <>
+              <Redirect
+                to={{
+                  pathname: "/inventory"
+                }}
+              />
+            </>
+          ) : (
             <div>
                 <Container>
                     <Row></Row>
@@ -55,7 +72,7 @@ class Login extends React.Component {
                                          name="password" />
                                     </Form>
                                 </Card.Body>
-                               <Card.Footer><Button onClick={() => this.props.dispatch(changeUSERNAME(this.state.userName))}>Log In</Button></Card.Footer>
+                               <Card.Footer><Button onClick={() => this.handleLogin()}>Log In</Button></Card.Footer>
                          </Card>
                         </Col>
                     </Row>
@@ -70,9 +87,11 @@ class Login extends React.Component {
 
 function mapStoreToProps(store) {
 
-    console.log(store.username);
+    console.log(store);
   return {
     username: store.username,
+    isAdmin: store.isAdmin,
+    isLogin: store.isLogin,
   };
 }
 

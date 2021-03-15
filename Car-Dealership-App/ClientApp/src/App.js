@@ -6,6 +6,7 @@ import { Home } from './components/Home';
 import { Inventory } from './components/Inventory';
 import { UserProfile } from './components/UserProfile';
 import Login  from './components/Login';
+import AcceptanceRules from './components/AcceptanceRules';
 
 
 import './custom.css'
@@ -21,6 +22,7 @@ export default class App extends Component {
         <Route path='/userProfile' component={UserProfile} />
         <Route path='/inventory' component={Inventory} />
         <Route path='/customerCarForm' component={CustomerCarForm} />
+        <Route path='/acceptanceRules' component={AcceptanceRules} />
         <Route path='/login' component={Login} />
       </Layout>
     );
