@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import CustomerCarForm from './CustomerCarForm';
 import { Card, Container, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+<<<<<<< HEAD
+=======
+// import DropdownButton from 'react-bootstrap/DropdownButton'
+>>>>>>> ad2c4077d43fa1cf1bed54fbf7b4b4bb400a963a
 
 export class Inventory extends Component {
   static displayName = Inventory.name;
