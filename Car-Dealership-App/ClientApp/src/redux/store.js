@@ -8,7 +8,7 @@ export const USERNAME = "USERNAME"
 
 export const ISADMIN = "ISADMIN"
 
-export const ISLOGIN = "ISLOGIN"
+export const LOGGEDIN = "LOGGEDIN"
 
 export const ACCEPTANCERULES = "ACCEPTANCERULES"
 
@@ -23,7 +23,7 @@ export function changeADMINSTATUS(val) {
 }
 
 export function changeLOGINSTATUS(val) {
-return { type: ISLOGIN, val };
+return { type: LOGGEDIN, val };
 }
 
 // let nextRule = 0;
@@ -55,10 +55,10 @@ const reducer = (state, action) => {
               ...state,
               isAdmin: action.val,
         };
-        case ISLOGIN:
+        case LOGGEDIN:
         return {
           ...state,
-          login: action.val,
+          loggedIn: action.val,
         };
         case ACCEPTANCERULES:
         return {
@@ -75,7 +75,7 @@ const reducer = (state, action) => {
 const initialState = {
     username: undefined,
     isAdmin: false,
-    isLogin: false,
+    loggedIn: false,
     acceptanceRules: []
 }
 

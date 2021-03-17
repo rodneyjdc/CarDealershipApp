@@ -11,6 +11,8 @@ import AcceptanceRules from './components/AcceptanceRules';
 
 import './custom.css'
 import CustomerCarForm from './components/CustomerCarForm';
+import  SignUp  from './components/SignUp';
+
 
 export default class App extends Component {
   static displayName = App.name;
@@ -23,6 +25,7 @@ export default class App extends Component {
         <Route path='/inventory' component={Inventory} />
         <Route path='/customerCarForm' component={CustomerCarForm} />
         <Route path='/acceptanceRules' component={AcceptanceRules} />
+        <Route path='/signUp' component={SignUp} />
         <Route path='/login' component={Login} />
       </Layout>
     );
