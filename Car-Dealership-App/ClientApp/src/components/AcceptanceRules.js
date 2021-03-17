@@ -19,21 +19,23 @@ import DropdownButton from 'react-bootstrap/DropdownButton'
           }
         })
           .then((result) => result.json())
-          .then((result) => this.updateMakes(result))
+          // .then((result) => console.log('Makes: ', result.Results))
+          .then((result) => this.updateMakes(result.Results))
           .catch((e) => console.log(e))
     };
 
     updateMakes  = (makes) => {
-        this.setState(prevState => ({
-            ...prevState,
-            makesList: this.state.makesList.concat(makes.Make_Name),
+        console.log('Makes: ', makes[0].Make_Name)
+         this.setState(prevState => ({
+             ...prevState,
+             makesList: this.state.makesList.concat(makes.Make_Name),
       
-          }));
+           }));
     };
     
 
     render() {
-        console.log()
+        // console.log('Makes List: ', this.props.makesList)
         return (
           <div>
             <h2>Acceptance Rules Form {this.props.username}</h2>
