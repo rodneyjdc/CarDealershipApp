@@ -24,7 +24,9 @@ export class SignUp extends Component {
   }
 
   handleRegister = () => {
-    const existingUsernames = this.getUsernames();
+   // const existingUsernames = this.getUsernames();
+
+    console.log("existingUsernames", this.getUsernames());
 
     if (!existingUsernames.includes(this.state.username)) {
       this.setState({
@@ -45,7 +47,7 @@ export class SignUp extends Component {
       }
 
       const newUser = {
-        "firstName": this.state.firstName,
+        firstName: this.state.firstName,
         lastName: this.state.lastName,
         username: this.state.username,
         password: this.state.password,
@@ -65,25 +67,36 @@ export class SignUp extends Component {
   }
 
   getUsernames = () => {
-    // make api call here
-    return ["animalLover", "hikingLover"];
+    //make api call here
+   return fetch("http://localhost:5001/api/users", {
+      method: "GET",
+      headers: {
+        "Accept": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      }      
+    })
+      .then((result) => (
+        result.json() ))
+      .then( (result) => {
+        return result.map(( item ) => item.username )  } )
+      .catch((e) => console.log(e));
+
+    //return ["animalLover", "hikingLover"];
   }
 
   postUser = (newUser) => {
-    console.log(newUser);
-
+   
     //make api call here
     fetch("http://localhost:5001/api/users", {
       method: "POST",
       headers: {
-    //    Accept: "application/json",
-       "Content-Type": "application/json" 
-
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
       },
-      body: newUser
+      body: JSON.stringify(newUser),
     })
       .then((result) => result.json())
-      .then(result => console.log(result))
+      .then((result) => console.log("result", result))
       .catch((e) => console.log(e));
     
    // console.log(newUser.toString());

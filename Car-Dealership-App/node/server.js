@@ -1,16 +1,19 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const fs = require("fs");
+
 
 const port = 5000;
 
 app.use(express.json());
+app.use(cors());
 
 const store = {};
  
 
 app.get("/api/users/", (req, res) => {
-  var data = fs.readFileSync("./server/test.json");
+  var data = fs.readFileSync("./server/users.json");
   var myData = JSON.parse(data); 
   res.status(200).send(myData);
 
@@ -21,13 +24,14 @@ app.listen(port, () => {
 });
 
 app.post("/api/users", (req, res) => {
- var data = fs.readFileSync("./server/test.json");
+ var data = fs.readFileSync("./server/users.json");
   var myData = JSON.parse(data);
   let count = data.count + 1;
    myData.push({ id: myData.length +1 , ...req.body });
    console.log("req.body", req.body);
   let newData = JSON.stringify(myData, null, 2);
-  fs.writeFileSync("./server/test.json", newData);
+  console.log("newData", newData);
+  fs.writeFileSync("./server/users.json", newData);
   res.status(200).send(newData);
 })
 
@@ -59,7 +63,7 @@ app.post("/api/users", (req, res) => {
 app.put("api/:id", (request, response) => {
   const { id } = request.params ;
   
-  const existingJsonData = JSON.parse(fs.readFileSync("./server/test.json"));
+  const existingJsonData = JSON.parse(fs.readFileSync("./server/users.json"));
   
   let Found = false;
 
@@ -71,12 +75,12 @@ app.put("api/:id", (request, response) => {
         existingJsonData[index] = element; 
 
         let newData = JSON.stringify(existingJsonData, null, 2);
-        fs.writeFileSync("./server/test.json", newData);        
+        fs.writeFileSync("./server/users.json", newData);        
     } 
   });
         
    if (Found)
-    response.status("200").send("undated item for id");
+    response.status("200").send("updated item for id");
     else  response.status("400").send("not found this id");
 
 });
@@ -85,7 +89,7 @@ app.put("api/:id", (request, response) => {
 app.delete("api/:id", (request, response) => {
   const { id } = request.params;
 
-  const existingJsonData = JSON.parse(fs.readFileSync("./server/test.json"));
+  const existingJsonData = JSON.parse(fs.readFileSync("./server/users.json"));
 
   let Found = false;
 
@@ -96,7 +100,7 @@ app.delete("api/:id", (request, response) => {
       existingJsonData.splice(index, 1);     
      let newData = JSON.stringify(existingJsonData, null, 2);
      
-     fs.writeFileSync("./server/test.json", newData);
+     fs.writeFileSync("./server/users.json", newData);
     }
   });
 
