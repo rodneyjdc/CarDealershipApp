@@ -45,14 +45,15 @@ export class SignUp extends Component {
       }
 
       const newUser = {
-        firstName: this.state.firstName,
+        "firstName": this.state.firstName,
         lastName: this.state.lastName,
         username: this.state.username,
         password: this.state.password,
         role: this.state.role
       };
 
-      this.postUser(newUser);
+      this.postUser(newUser);     
+
     } else {
       console.log("inside handleRegister, else case")
       this.setState({
@@ -69,8 +70,23 @@ export class SignUp extends Component {
   }
 
   postUser = (newUser) => {
+    console.log(newUser);
+
     //make api call here
-    console.log(newUser.toString());
+    fetch("http://localhost:5001/api/users", {
+      method: "POST",
+      headers: {
+    //    Accept: "application/json",
+       "Content-Type": "application/json" 
+
+      },
+      body: newUser
+    })
+      .then((result) => result.json())
+      .then(result => console.log(result))
+      .catch((e) => console.log(e));
+    
+   // console.log(newUser.toString());
   }
   
 
