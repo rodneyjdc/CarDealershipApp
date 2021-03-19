@@ -15,4 +15,20 @@ services:
       dockerfile: Dockerfile
     ports: 
       - "5001:5000"
+  mongo:
+    image: mongo
+    restart: always
+    volumes:
+      - ./mongoDb:/data/db
+    environment: 
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment: 
+      MONGO_INITDB_ROOT_ADMINUSERNAME: root
+      MONGO_INITDB_ROOT_ADMINPASSWORD: password
     
