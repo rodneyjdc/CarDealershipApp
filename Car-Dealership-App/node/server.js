@@ -36,6 +36,16 @@ app.post("/api/users", (req, res) => {
 })
 
 
+app.get("/api/usersname", (req, res) => {
+  var data = fs.readFileSync("./server/users.json");
+  var myData = JSON.parse(data);
+  var resultArr = [];
+  myData.forEach((item) => resultArr.push(item.username));
+  
+  res.status(200).send(resultArr);
+});
+
+
 
 /* app.put("/:id", (req, res) => {
   const { id } = req.parems;

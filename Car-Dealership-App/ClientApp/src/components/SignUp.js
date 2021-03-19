@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 //import { connect } from "react-redux";
-import { Container, Card, Form, Button, Row, Col } from 'react-bootstrap'
-
+import { Container, Card, Form, Button, Row, Col } from "react-bootstrap";
 
 export class SignUp extends Component {
   static displayName = SignUp.name;
@@ -14,78 +13,86 @@ export class SignUp extends Component {
     role: "",
     validUsername: false,
     errorArea: "",
+    existingUsernames: []
   };
 
   handleInputChange = (event) => {
     event.persist();
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
-  }
+  };
 
   handleRegister = () => {
-   // const existingUsernames = this.getUsernames();
+    //const existingUsernames = this.getUsernames();
 
-    console.log("existingUsernames", this.getUsernames());
+    console.log("existingUsernames", this.state.existingUsernames);
 
-    if (!existingUsernames.includes(this.state.username)) {
+    if (this.state.existingUsernames.length === 0) this.postUser();
+    else if (!this.state.existingUsernames.includes(this.state.username))
+      this.postUser();
+    else {
+      console.log("inside handleRegister, else case");
       this.setState({
-        validUsername: true
+        errorArea: "This username is already chosen.",
       });
-
-      const first = this.state.firstName.toLowerCase();
-      const last = this.state.lastName.toLowerCase();
-
-      if (first === "laura" && last === "admin") {
-        this.setState({
-          role: "admin"
-        });
-      } else {
-        this.setState({
-          role: "user"
-        })
-      }
-
-      const newUser = {
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        username: this.state.username,
-        password: this.state.password,
-        role: this.state.role
-      };
-
-      this.postUser(newUser);     
-
-    } else {
-      console.log("inside handleRegister, else case")
-      this.setState({
-        errorArea: "This username is already chosen."
-      });
-
     }
     console.log("done with registering");
-  }
+  };
 
   getUsernames = () => {
     //make api call here
-   return fetch("http://localhost:5001/api/users", {
+    fetch("http://localhost:5001/api/usersname", {
       method: "GET",
       headers: {
-        "Accept": "application/json",
+        Accept: "application/json",
+        "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
-      }      
+      },
     })
-      .then((result) => (
-        result.json() ))
-      .then( (result) => {
-        return result.map(( item ) => item.username )  } )
+      .then((result) => result.json())
+      .then((result) => {
+           console.log("before  befor map", result);         
+          //console.log("before map", result);
+            this.setState({
+              existingUsernames: result,
+            });
+        }       
+      )
       .catch((e) => console.log(e));
+     
+  };
 
-    //return ["animalLover", "hikingLover"];
+  componentDidMount(){
+     this.getUsernames();
   }
 
-  postUser = (newUser) => {
-   
+  postUser = () => {
+    this.setState({
+      validUsername: true,
+    });
+
+    const first = this.state.firstName.toLowerCase();
+    const last = this.state.lastName.toLowerCase();
+
+    if (first === "laura" && last === "admin") {
+      this.setState({
+        role: "admin",
+      });
+    } else {
+      this.setState({
+        role: "user",
+      });
+    }
+
+    const newUser = {
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      username: this.state.username,
+      password: this.state.password,
+      role: this.state.role,
+    };
+
     //make api call here
     fetch("http://localhost:5001/api/users", {
       method: "POST",
@@ -98,14 +105,13 @@ export class SignUp extends Component {
       .then((result) => result.json())
       .then((result) => console.log("result", result))
       .catch((e) => console.log(e));
-    
-   // console.log(newUser.toString());
-  }
-  
+
+    // console.log(newUser.toString());
+  };
 
   displayForm = () => {
     return (
-    <>
+      <>
         <p>Inside sign up page</p>
         {this.state.errorArea}
         <Container>
@@ -115,41 +121,51 @@ export class SignUp extends Component {
                 <Card.Header>Sign Up Page</Card.Header>
                 <Card.Body>
                   <Form>
-                    <Form.Control type="input" placeholder="first name"
-                      onChange={e => this.handleInputChange(e)}
-                      name="firstName" />
+                    <Form.Control
+                      type="input"
+                      placeholder="first name"
+                      onChange={(e) => this.handleInputChange(e)}
+                      name="firstName"
+                    />
                     <br></br>
-                    <Form.Control type="input" placeholder="last name"
-                      onChange={e => this.handleInputChange(e)}
-                      name="lastName" />
+                    <Form.Control
+                      type="input"
+                      placeholder="last name"
+                      onChange={(e) => this.handleInputChange(e)}
+                      name="lastName"
+                    />
                     <br></br>
-                    <Form.Control type="input" placeholder="username"
-                      onChange={e => this.handleInputChange(e)}
-                      name="username" />
+                    <Form.Control
+                      type="input"
+                      placeholder="username"
+                      onChange={(e) => this.handleInputChange(e)}
+                      name="username"
+                    />
                     <br></br>
-                    <Form.Control type="input" placeholder="password"
-                      onChange={e => this.handleInputChange(e)}
-                      name="password" />
+                    <Form.Control
+                      type="input"
+                      placeholder="password"
+                      onChange={(e) => this.handleInputChange(e)}
+                      name="password"
+                    />
                   </Form>
                 </Card.Body>
                 <Card.Footer>
-                  <Button onClick={() => this.handleRegister()}>Register</Button>
+                  <Button onClick={() => this.handleRegister()}>
+                    Register
+                  </Button>
                 </Card.Footer>
               </Card>
             </Col>
           </Row>
         </Container>
       </>
-    )
-  }
+    );
+  };
 
   render() {
-    console.log("Inside render of SignUp")
-    return (
-      <>
-        {!this.state.validUsername && this.displayForm()}
-      </>
-    );
+    console.log("Inside render of SignUp");
+    return <>{!this.state.validUsername && this.displayForm()}</>;
   }
 }
 
@@ -161,5 +177,4 @@ export default SignUp;
 //   };
 // }
 
-// export default connect(mapStateToProps)(CustomerCarForm); 
-
+// export default connect(mapStateToProps)(CustomerCarForm);
