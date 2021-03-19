@@ -19,31 +19,18 @@ services:
     image: mongo
     restart: always
     volumes:
-<<<<<<< HEAD
       - /mongoDb:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
 
-=======
-      - ./mongoDb:/data/db
-    environment: 
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: password
->>>>>>> 413449d97c4962c7c5bfbd0e0b5b91305c182907
   mongo-express:
     image: mongo-express
     restart: always
     ports:
       - 8081:8081
-<<<<<<< HEAD
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
 
-=======
-    environment: 
-      MONGO_INITDB_ROOT_ADMINUSERNAME: root
-      MONGO_INITDB_ROOT_ADMINPASSWORD: password
->>>>>>> 413449d97c4962c7c5bfbd0e0b5b91305c182907
     

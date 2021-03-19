@@ -61,7 +61,7 @@ export class UserProfile extends React.Component {
 
         return (
             <>
-                <h1>Welcome {this.state.name}!</h1>
+                <h1>Welcome {this.props.location.state.name}!</h1>
                 <br></br>
                 <br></br>
                 {this.displayCars(this.state.name)}

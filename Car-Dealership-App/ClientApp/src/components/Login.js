@@ -10,6 +10,7 @@ class Login extends React.Component {
     state = {
         userName: "",
         password: "",
+        firstName: "",
         existingUsers: []
     };
 
@@ -51,7 +52,7 @@ class Login extends React.Component {
         this.state.existingUsers.forEach(element => {
             if (this.state.userName === element.username && this.state.password === element.password) {
                 console.log("inside for each, element.role", element.role);
-                
+                this.setState({firstName: element.firstName});
                 if (element.role === "admin") {
                     this.props.dispatch(changeADMINSTATUS(true));
                     this.props.dispatch(changeLOGINSTATUS(true));
@@ -90,7 +91,10 @@ class Login extends React.Component {
                 <>
                     <Redirect
                         to={{
-                            pathname: "/inventory"
+                            pathname: "/userProfile",
+                            state: {
+                                name: this.state.firstName,
+                            }
                         }}
                     />
                 </>
