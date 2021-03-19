@@ -10,7 +10,30 @@ class Login extends React.Component {
     state = {
         userName: "",
         password: "",
+        existingUsers: []
     };
+
+    componentDidMount() {
+        this.getUsers();
+    }
+
+    getUsers = () => {
+        fetch("http://localhost:5000/api/users", {
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+            },
+        })
+            .then((result) => result.json())
+            .then((result) => {
+                this.setState({
+                    existingUsers: result,
+                });
+            })
+            .catch((e) => console.log(e));
+    }
 
     updateInput = (event) => {
 
@@ -24,15 +47,21 @@ class Login extends React.Component {
 
     handleLogin = () => {
         console.log(this.props);
-        //this.props.changeUSERNAME(this.state.userName); 
-        this.props.dispatch(changeUSERNAME(this.state.userName));
+        console.log("in handleLogin");
+        this.state.existingUsers.forEach(element => {
+            if (this.state.userName === element.username && this.state.password === element.password) {
+                console.log("inside for each, element.role", element.role);
+                
+                if (element.role === "admin") {
+                    this.props.dispatch(changeADMINSTATUS(true));
+                    this.props.dispatch(changeLOGINSTATUS(true));
+                } else {
+                    this.props.dispatch(changeLOGINSTATUS(true));
+                }
+            }
+        });
 
-        if (this.state.userName === 'Laura' || this.state.userName === 'laura') {
-            this.props.dispatch(changeADMINSTATUS(true));
-            this.props.dispatch(changeLOGINSTATUS(true));
-        } else {
-            this.props.dispatch(changeLOGINSTATUS(true));
-        }
+        this.props.dispatch(changeUSERNAME(this.state.userName));
 
         this.setState({
             userName: "",
@@ -56,7 +85,7 @@ class Login extends React.Component {
     render() {
         console.log(this.props);
         console.log("this.props.username", this.props.username);
-        return this.props.username ?
+        return this.props.loggedIn ?
             (
                 <>
                     <Redirect
@@ -90,7 +119,7 @@ class Login extends React.Component {
                                         <Button onClick={() => this.handleLogin()}>Log In</Button>
                                         <Link to={{
                                             pathname: '/signUp',
-                                            }}>Sign Up</Link>
+                                        }}>Sign Up</Link>
                                     </Card.Footer>
                                 </Card>
                             </Col>
@@ -110,7 +139,7 @@ function mapStoreToProps(store) {
     return {
         username: store.username,
         isAdmin: store.isAdmin,
-        isLogin: store.isLogin,
+        loggedIn: store.loggedIn,
     };
 }
 

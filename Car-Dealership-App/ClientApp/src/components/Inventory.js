@@ -71,13 +71,14 @@ export class Inventory extends Component {
               <Card.Body>
                 <Card.Title>Car: {i + 1}</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">
-                  <Link to={{
+                  {/* <Link to={{
                     pathname: '/userProfile',
                     state: {
                       ownerName: listedCars[i].owner,
                       carsList: this.state.listedCars
                     }
-                  }}>Owner: {listedCars[i].owner}</Link>
+                  }}>Owner: {listedCars[i].owner}</Link> */}
+                  Owner: {listedCars[i].owner}
                 </Card.Subtitle>
                 <Card.Text>
                   <Container>

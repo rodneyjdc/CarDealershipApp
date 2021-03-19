@@ -1,6 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, isValidElement } from "react";
 //import { connect } from "react-redux";
 import { Container, Card, Form, Button, Row, Col } from "react-bootstrap";
+import Login from './Login';
+import { Redirect } from "react-router";
+import UserProfile from "./UserProfile";
+
 
 export class SignUp extends Component {
   static displayName = SignUp.name;
@@ -10,7 +14,7 @@ export class SignUp extends Component {
     lastName: "",
     username: "",
     password: "",
-    role: "",
+    role: "none",
     validUsername: false,
     errorArea: "",
     existingUsernames: []
@@ -29,20 +33,40 @@ export class SignUp extends Component {
     console.log("existingUsernames", this.state.existingUsernames);
 
     if (this.state.existingUsernames.length === 0) this.postUser();
-    else if (!this.state.existingUsernames.includes(this.state.username))
-      this.postUser();
+    else if (!this.state.existingUsernames.includes(this.state.username)) {
+      let isValid = true;
+      let userRole;
+
+      const first = this.state.firstName.toLowerCase();
+      const last = this.state.lastName.toLowerCase();
+
+      if (first === "laura" && last === "admin") {
+        userRole = "admin";
+      } else {
+        console.log("else case not laura")
+        userRole = "user";
+      }
+      
+      this.setState({
+        validUsername: isValid,
+        role: userRole
+      }, () => this.postUser());
+
+      console.log("in handle register after postUser");
+    }
     else {
       console.log("inside handleRegister, else case");
       this.setState({
         errorArea: "This username is already chosen.",
       });
     }
-    console.log("done with registering");
+
   };
 
   getUsernames = () => {
     //make api call here
-    fetch("http://localhost:5001/api/usersname", {
+    // fetch("http://localhost:5001/api/usersname", {
+    fetch("http://localhost:5000/api/usersname", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -52,38 +76,22 @@ export class SignUp extends Component {
     })
       .then((result) => result.json())
       .then((result) => {
-           console.log("before  befor map", result);         
-          //console.log("before map", result);
-            this.setState({
-              existingUsernames: result,
-            });
-        }       
-      )
+        console.log("before  befor map", result);
+        //console.log("before map", result);
+        this.setState({
+          existingUsernames: result,
+        });
+      })
       .catch((e) => console.log(e));
-     
+
   };
 
-  componentDidMount(){
-     this.getUsernames();
+  componentDidMount() {
+    this.getUsernames();
   }
 
   postUser = () => {
-    this.setState({
-      validUsername: true,
-    });
-
-    const first = this.state.firstName.toLowerCase();
-    const last = this.state.lastName.toLowerCase();
-
-    if (first === "laura" && last === "admin") {
-      this.setState({
-        role: "admin",
-      });
-    } else {
-      this.setState({
-        role: "user",
-      });
-    }
+    console.log("this.state.role", this.state.role);
 
     const newUser = {
       firstName: this.state.firstName,
@@ -94,7 +102,7 @@ export class SignUp extends Component {
     };
 
     //make api call here
-    fetch("http://localhost:5001/api/users", {
+    fetch("http://localhost:5000/api/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -107,6 +115,9 @@ export class SignUp extends Component {
       .catch((e) => console.log(e));
 
     // console.log(newUser.toString());
+
+
+    console.log("end of postUser");
   };
 
   displayForm = () => {
@@ -165,7 +176,19 @@ export class SignUp extends Component {
 
   render() {
     console.log("Inside render of SignUp");
-    return <>{!this.state.validUsername && this.displayForm()}</>;
+    //return <>{!this.state.validUsername && this.displayForm()}</>;
+    return this.state.validUsername ?
+      (
+        <>
+          <Redirect
+            to={{
+              pathname: "/login"
+            }}
+          />
+        </>
+      ) : (
+        this.displayForm()
+      )
   }
 }
 
