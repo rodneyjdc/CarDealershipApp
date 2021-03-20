@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, Container, Row } from 'react-bootstrap'
+import { Link } from "react-router-dom";
 
 export class UserProfile extends React.Component {
     state = {
@@ -8,11 +9,32 @@ export class UserProfile extends React.Component {
     };
 
     componentDidMount() {
+<<<<<<< HEAD
         this.getCars();
         this.setState({
             name: this.props.location.state.name,
         })
+=======
+    
+    fetch("https://localhost:5001/api/Inventory", {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json'
+      }
+    })
+      .then((result) => result.json())
+      .then((result) => 
+      {
+          this.setState({
+            name: this.props.username,
+            carsList: result,
+          });
+      })
+      .catch((e) => console.log(e))
+>>>>>>> bef0e356bb613a5583149ce0464cc3c66e64936e
     }
+ 
+    
 
     getCars = () => {
         fetch("https://localhost:5001/api/Inventory", {
@@ -77,14 +99,25 @@ export class UserProfile extends React.Component {
 
     render() {
 
-        return (
-            <>
-                <h1>Welcome {this.props.location.state.name}!</h1>
-                <br></br>
-                <br></br>
-                {this.displayCars(this.state.name)}
-            </>
-        );
+       return this.props.loggedIn ? (
+         <>
+           <h1>Welcome {this.props.location.state.name}!</h1>
+           <br></br>
+           <br></br>
+           {this.displayCars(this.state.name)}
+         </>
+       ) : (
+         <>
+           <> please log in first</>
+           <Link
+             to={{
+               pathname: "/Login",
+             }}
+           >
+             Log in
+           </Link>
+         </>
+       )
     }
 }
 
