@@ -35,9 +35,19 @@ app.get("/api/usersname", (req, res) => {
 
 app.post("/api/users", (req, res) => {
  var data = fs.readFileSync("./db/users.json");
-  var myData = JSON.parse(data);
-  let count = data.count + 1;
-   myData.push({ id: myData.length +1 , ...req.body });
+ var myData = JSON.parse(data); 
+  let count = 0;
+  if (myData.length === 0) count = 0;
+  else {
+    var maxId = 0;
+    for (const iterator of myData) {
+      // console.log("iterator.id", iterator.id);
+      iterator.id >= maxId ? (maxId = iterator.id) : maxId;
+      //console.log("imaxId", maxId);
+    }
+    count = maxId;
+  }
+   myData.push({ id: count + 1, ...req.body });  
    console.log("req.body", req.body);
   let newData = JSON.stringify(myData, null, 2);
   console.log("newData", newData);
@@ -45,9 +55,10 @@ app.post("/api/users", (req, res) => {
   res.status(200).send(newData);
 })
 
-app.put("api/:id", (request, response) => {
+// "/" must be in front of api
+app.put("/api/users/:id", (request, response) => {
   const { id } = request.params ;
-  
+   
   const existingJsonData = JSON.parse(fs.readFileSync("./db/users.json"));
   
   let Found = false;
@@ -71,7 +82,7 @@ app.put("api/:id", (request, response) => {
 });
 
 
-app.delete("api/users/:id", (request, response) => {
+app.delete("/api/users/:id", (request, response) => {
   const { id } = request.params;
 
   const existingJsonData = JSON.parse(fs.readFileSync("./db/users.json"));
@@ -106,16 +117,26 @@ app.get("/api/cars/", (req, res) => {
 app.post("/api/cars", (req, res) => {
  var data = fs.readFileSync("./db/cars.json");
   var myData = JSON.parse(data);
-  let count = data.count + 1;
-   myData.push({ id: myData.length +1 , ...req.body });
-   console.log("req.body", req.body);
+  let count = 0;
+  if (myData.length === 0 ) count =0;
+  else {
+      var maxId = 0;
+      for (const iterator of myData) {   
+        // console.log("iterator.id", iterator.id);     
+         iterator.id >= maxId ? maxId =iterator.id : maxId   
+         //console.log("imaxId", maxId);     
+      }
+      count = maxId
+  }  
+  myData.push({ id: count + 1, ...req.body });
+  // console.log("req.body", req.body);
   let newData = JSON.stringify(myData, null, 2);
   console.log("newData", newData);
   fs.writeFileSync("./db/cars.json", newData);
   res.status(200).send(newData);
 })
 
-app.put("api/cars/:id", (request, response) => {
+app.put("/api/cars/:id", (request, response) => {
   const { id } = request.params ;
   
   const existingJsonData = JSON.parse(fs.readFileSync("./db/cars.json"));
@@ -123,8 +144,9 @@ app.put("api/cars/:id", (request, response) => {
   let Found = false;
 
   existingJsonData.forEach((element, index) => {
-     
+     console.log("element[id]", element["id"]);
     if (Found == false && element.hasOwnProperty("id") && element["id"] == id) {
+      
         Found = true;  
         element = { ...element, ...request.body};        
         existingJsonData[index] = element; 
@@ -141,7 +163,7 @@ app.put("api/cars/:id", (request, response) => {
 });
 
 
-app.delete("api/cars/:id", (request, response) => {
+app.delete("/api/cars/:id", (request, response) => {
   const { id } = request.params;
   console.log("id: ", id);
   const existingJsonData = JSON.parse(fs.readFileSync("./db/cars.json"));
@@ -150,8 +172,6 @@ app.delete("api/cars/:id", (request, response) => {
 
   existingJsonData.forEach((element, index) => {
     if (Found == false && element.hasOwnProperty("id") && element["id"] == id) {
-      console.log("found element: ", element);
-
       Found = true;
        
       existingJsonData.splice(index, 1);     
