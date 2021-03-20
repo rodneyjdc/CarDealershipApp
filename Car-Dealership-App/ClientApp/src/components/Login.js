@@ -49,6 +49,7 @@ class Login extends React.Component {
     handleLogin = () => {
         console.log(this.props);
         console.log("in handleLogin");
+        console.log("this.state.existingUsers", this.state.existingUsers);
         this.state.existingUsers.forEach(element => {
             if (this.state.userName === element.username && this.state.password === element.password) {
                 console.log("inside for each, element.role", element.role);
