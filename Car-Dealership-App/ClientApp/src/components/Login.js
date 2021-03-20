@@ -19,12 +19,12 @@ class Login extends React.Component {
     }
 
     getUsers = () => {
-        fetch("http://localhost:5000/api/users", {
+        fetch("http://localhost:8000/api/users", {
             method: "GET",
             headers: {
                 Accept: "application/json",
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
+                // "Content-Type": "application/json",
+                // "Access-Control-Allow-Origin": "*",
             },
         })
             .then((result) => result.json())
@@ -37,18 +37,15 @@ class Login extends React.Component {
     }
 
     updateInput = (event) => {
-
-
         this.setState({
             [event.target.name]: event.target.value
         });
-
-
     };
 
     handleLogin = () => {
         console.log(this.props);
         console.log("in handleLogin");
+        console.log("this.state.existingUsers", this.state.existingUsers);
         this.state.existingUsers.forEach(element => {
             if (this.state.userName === element.username && this.state.password === element.password) {
                 console.log("inside for each, element.role", element.role);

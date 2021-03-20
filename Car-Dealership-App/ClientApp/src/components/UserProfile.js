@@ -8,16 +8,34 @@ export class UserProfile extends React.Component {
     };
 
     componentDidMount() {
+        this.getCars();
         this.setState({
-            name: this.props.location.state.ownerName,
-            carsList: this.props.location.state.carsList,
+            name: this.props.location.state.name,
         })
     }
 
+    getCars = () => {
+        fetch("https://localhost:5001/api/Inventory", {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+            .then((result) => result.json())
+            .then((result) => {
+                this.setState({
+                    carsList: result
+                })
+            })
+            .catch((e) => console.log(e))
+    }
+
+
     getUserCars = (ownerName) => {
+        console.log("inside getUserCars, this.state.carsList", this.state.carsList)
         console.log("inside getUsersCars");
         console.log(ownerName);
-        
+
         const result = this.state.carsList.filter((car) => {
             console.log("inside filter func");
             console.log("car owner: ", car.owner);

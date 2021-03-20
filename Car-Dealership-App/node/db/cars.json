@@ -1,0 +1,10 @@
+[
+  {
+    "id": 1,
+    "name": "Jaxon",
+    "age": 100,
+    "gender": "Male",
+    "department": "French",
+    "car": "Mercedes"
+  }
+]
