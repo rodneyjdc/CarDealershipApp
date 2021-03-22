@@ -9,12 +9,6 @@ export class UserProfile extends React.Component {
     };
 
     componentDidMount() {
-<<<<<<< HEAD
-        this.getCars();
-        this.setState({
-            name: this.props.location.state.name,
-        })
-=======
     
     fetch("https://localhost:5001/api/Inventory", {
       method: 'GET',
@@ -31,7 +25,6 @@ export class UserProfile extends React.Component {
           });
       })
       .catch((e) => console.log(e))
->>>>>>> bef0e356bb613a5583149ce0464cc3c66e64936e
     }
  
     
