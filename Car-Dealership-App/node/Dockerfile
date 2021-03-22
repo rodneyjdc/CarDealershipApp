@@ -5,4 +5,4 @@ COPY package.json ./
 COPY package-lock.json ./
 RUN npm i
 COPY . ./
-CMD ["node", "server.js"]
+CMD ["node", "index.js"]

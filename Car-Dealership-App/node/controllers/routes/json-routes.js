@@ -4,7 +4,7 @@ const { readWrite } = require("../../utils/helpers.js");
 const { add, upd, del } = require("../queries/json-queries.js");
 const filePath = "../data/cars.json";
 
-router.get("/", (req, res) => {
+router.get("/cars", (req, res) => {
   console.log("getting");
   readWrite(filePath, null).then((js) => {
     console.log(js);
