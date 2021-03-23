@@ -3,7 +3,7 @@ const router = express.Router();
 const Listing = require("../../models/car.js");
 const Users = require("../../models/user.js");
 
-router.post("/", ({ body }, res) => {
+router.post("/api/cars", ({ body }, res) => {
   Listing.create(body)
     .then((dbListing) => {
       res.json(dbListing);
@@ -23,7 +23,7 @@ router.post("/bulk", ({ body }, res) => {
     });
 });
 
-router.get("/", (req, res) => {
+router.get("/api/cars", (req, res) => {
   Listing.find({})
     .sort({ date: -1 })
     .then((dbListing) => {

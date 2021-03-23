@@ -24,7 +24,7 @@ const express = require("express");
 const app = express();
 
 //specify port
-const port = 6000;
+const port = 5000;
 
 //bring in cors
 const cors = require("cors");

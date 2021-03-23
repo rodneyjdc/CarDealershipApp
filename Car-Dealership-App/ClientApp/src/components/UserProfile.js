@@ -9,28 +9,13 @@ export class UserProfile extends React.Component {
     };
 
     componentDidMount() {
-    
-    fetch("https://localhost:5001/api/Inventory", {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json'
-      }
-    })
-      .then((result) => result.json())
-      .then((result) => 
-      {
-          this.setState({
-            name: this.props.username,
-            carsList: result,
-          });
-      })
-      .catch((e) => console.log(e))
+      this.getCars()
     }
  
     
 
     getCars = () => {
-        fetch("https://localhost:5001/api/Inventory", {
+        fetch("https://localhost:5000/mongo/api/cars", {
             method: 'GET',
             headers: {
                 'Accept': 'application/json'
@@ -39,7 +24,8 @@ export class UserProfile extends React.Component {
             .then((result) => result.json())
             .then((result) => {
                 this.setState({
-                    carsList: result
+                  name: this.props.username,
+                  carsList: result
                 })
             })
             .catch((e) => console.log(e))

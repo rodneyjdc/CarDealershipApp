@@ -19,7 +19,7 @@ class Login extends React.Component {
     }
 
     getUsers = () => {
-        fetch("http://localhost:8000/api/users", {
+        fetch("http://localhost:5000/mongo/api/users", {
             method: "GET",
             headers: {
                 Accept: "application/json",
@@ -43,11 +43,11 @@ class Login extends React.Component {
     };
 
     handleLogin = () => {
-        console.log(this.props);
-        console.log("in handleLogin");
+        // console.log(this.props);
+        // console.log("in handleLogin");
         console.log("this.state.existingUsers", this.state.existingUsers);
         this.state.existingUsers.forEach(element => {
-            if (this.state.userName === element.username && this.state.password === element.password) {
+            if (this.state.userName === element.userName && this.state.password === element.password) {
                 console.log("inside for each, element.role", element.role);
                 this.setState({firstName: element.firstName});
                 if (element.role === "admin") {
@@ -81,8 +81,8 @@ class Login extends React.Component {
     }
 
     render() {
-        console.log(this.props);
-        console.log("this.props.username", this.props.username);
+        // console.log(this.props);
+        // console.log("this.props.username", this.props.username);
         return this.props.loggedIn ?
             (
                 <>
