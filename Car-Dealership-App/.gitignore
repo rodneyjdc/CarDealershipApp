@@ -181,7 +181,7 @@ ClientBin/
 orleans.codegen.cs
 
 node_modules/
-# mongoDb/
+mongoDb/
 
 # RIA/Silverlight projects
 Generated_Code/
