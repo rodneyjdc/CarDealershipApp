@@ -21,7 +21,7 @@ services:
     image: mongo
     restart: always
     volumes:
-      - /mongoDb:/data/db
+      - ./mongoDb:/data/db
     ports:
       - "27017:27017"
     command: [--auth]
