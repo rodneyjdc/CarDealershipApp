@@ -22,15 +22,15 @@ namespace Car_Dealership_App.Controllers
         {
             
             var myCars = FakeData.getCars();
-            var lauraCar = new Car();
-                lauraCar.Owner = "Laura";
-                lauraCar.Make = "Toyota";
-                lauraCar.Color = "blue";
-                lauraCar.Model = "2001";
-                lauraCar.Year = 2020;
-                lauraCar.imageUrl = "https://source.unsplash.com/1600x900/?car";
-                lauraCar._id = Guid.NewGuid().ToString();
-            myCars.add(lauraCar);
+            // var lauraCar = new Car();
+            //     lauraCar.Owner = "Laura";
+            //     lauraCar.Make = "Toyota";
+            //     lauraCar.Color = "blue";
+            //     lauraCar.Model = "2001";
+            //     lauraCar.Year = 2020;
+            //     lauraCar.imageUrl = "https://source.unsplash.com/1600x900/?car";
+            //     lauraCar._id = Guid.NewGuid().ToString();
+            // myCars.add(lauraCar);
             return myCars;
         }
 
