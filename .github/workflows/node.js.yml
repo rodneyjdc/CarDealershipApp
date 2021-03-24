@@ -27,7 +27,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
       working-directory: ./Car-Dealership-App/node
-    - run: npm run build index.js
+    - run: npm run build
       working-directory: ./Car-Dealership-App/node
     - run: npm test
       working-directory: ./Car-Dealership-App/node
