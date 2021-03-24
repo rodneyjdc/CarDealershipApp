@@ -12,6 +12,7 @@ export class SignUp extends Component {
   state = {
     firstName: "",
     lastName: "",
+    email: "",
     username: "",
     password: "",
     role: "none",
@@ -32,8 +33,8 @@ export class SignUp extends Component {
 
     console.log("existingUsernames", this.state.existingUsernames);
 
-    if (this.state.existingUsernames.length === 0) this.postUser();
-    else if (!this.state.existingUsernames.includes(this.state.username)) {
+    // if (this.state.existingUsernames.length === 0) this.postUser();
+    if (!this.state.existingUsernames.includes(this.state.username)) {
       let isValid = true;
       let userRole;
 
@@ -61,12 +62,13 @@ export class SignUp extends Component {
       });
     }
 
+
   };
 
   getUsernames = () => {
     //make api call here
     // fetch("http://localhost:5001/api/usersname", {
-    fetch("http://localhost:5000/api/usersname", {
+    fetch("http://localhost:5000/mongo/api/usernames", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -96,13 +98,14 @@ export class SignUp extends Component {
     const newUser = {
       firstName: this.state.firstName,
       lastName: this.state.lastName,
+      email: this.state.email,
       username: this.state.username,
       password: this.state.password,
       role: this.state.role,
     };
 
     //make api call here
-    fetch("http://localhost:5000/api/users", {
+    fetch("http://localhost:5000/mongo/api/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -144,6 +147,13 @@ export class SignUp extends Component {
                       placeholder="last name"
                       onChange={(e) => this.handleInputChange(e)}
                       name="lastName"
+                    />
+                    <br></br>
+                    <Form.Control
+                      type="input"
+                      placeholder="email"
+                      onChange={(e) => this.handleInputChange(e)}
+                      name="email"
                     />
                     <br></br>
                     <Form.Control

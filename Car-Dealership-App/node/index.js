@@ -2,13 +2,16 @@ const mongoose = require("mongoose"); //bring in Mongo
 const config = require("./config.js"); //bring in config
 
 // Connect to MongoDB database
-mongoose
-  .connect(config.url, {
+// mongoose
+//   .connect(config.url, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//     user: config.user,
+//     pass: config.pwd,
+//   })
+  mongoose.connect('mongodb://localhost:27017/mycardealership', {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
-    user: config.user,
-    pass: config.pwd,
-  })
+    useUnifiedTopology: true})
   .then(() => {
     console.log("successfully connected to the database");
   })

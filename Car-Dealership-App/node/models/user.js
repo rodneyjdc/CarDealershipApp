@@ -17,10 +17,10 @@ const userSchema = new Schema({
     trim: true,
     required: "Enter your email",
   },
-  userName: {
+  username: {
     type: String,
     trim: true,
-    required: "Enter your user name",
+    required: "Enter your username",
   },
   password: {
     type: String,

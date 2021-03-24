@@ -66,11 +66,11 @@ router.get("/api/usernames", (req, res) => {
       res.status(400).json(err);
     }); */
     Users.find({}, { _id: 0 })
-      .select("userName")
+      .select("username")
       .sort({ date: -1 })
       .then((dbListing) => {
         finalArray = dbListing.map(function (obj) {
-          return obj.userName;
+          return obj.username;
         });
         res.json(finalArray);
       })
@@ -82,6 +82,17 @@ router.get("/api/usernames", (req, res) => {
 
 router.post("/api/users", ({ body }, res) => {
   Users.create(body)
+    .then((dbListing) => {
+      res.json(dbListing);
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+});
+
+router.delete("/api/users/:id", (req, res) => {
+  const { id } = req.params;
+  Users.deleteOne({_id: id})
     .then((dbListing) => {
       res.json(dbListing);
     })
