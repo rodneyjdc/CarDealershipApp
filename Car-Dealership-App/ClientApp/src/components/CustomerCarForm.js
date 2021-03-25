@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import axios from "axios";
 
 
-class CustomerCarForm extends Component {
+export class CustomerCarForm extends Component {
   static displayName = CustomerCarForm.name;
 
   state = {

@@ -6,7 +6,7 @@ import { changeADMINSTATUS, changeLOGINSTATUS, changeUSERNAME } from "../redux/s
 import { Redirect } from "react-router";
 import { Link } from 'react-router-dom'
 
-class Login extends React.Component {
+export class Login extends React.Component {
     state = {
         userName: "",
         password: "",

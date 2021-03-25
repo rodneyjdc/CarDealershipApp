@@ -1,8 +1,22 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import CustomerCarForm from '../components/CustomerCarForm'
+import { CustomerCarForm} from '../components/CustomerCarForm'
+// import configureMockStore from 'redux-mock-store'
+// import { Provider } from 'react-redux'
+
 
 describe('CustomerCarForm', () => {
+  // let customerCarFormWrapper;
+  //   beforeAll(() => {
+  //       const mockStore = configureMockStore();
+  //       const store = mockStore({});
+  //       const mockOnSubmit = jest.fn();
+  //       const appWrapper = shallow(
+  //           <Provider store={store}>
+  //               <CustomerCarForm addCar={mockOnSubmit}/>
+  //           </ Provider>);
+  //       customerCarFormWrapper = appWrapper.find('CustomerCarForm');
+  //   });
 
   // foundation
   it("expect CustomerCarForm to have state", () => {
