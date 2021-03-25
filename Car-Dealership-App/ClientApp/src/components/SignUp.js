@@ -1,9 +1,7 @@
-import React, { Component, isValidElement } from "react";
+import React, { Component } from "react";
 //import { connect } from "react-redux";
 import { Container, Card, Form, Button, Row, Col } from "react-bootstrap";
-import Login from './Login';
 import { Redirect } from "react-router";
-import UserProfile from "./UserProfile";
 
 
 export class SignUp extends Component {
