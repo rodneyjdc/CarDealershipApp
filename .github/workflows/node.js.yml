@@ -11,7 +11,7 @@ on:
 
 jobs:
   node:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     strategy:
       matrix:
         node-version: [12.x]
@@ -30,7 +30,7 @@ jobs:
 #       working-directory: ./Car-Dealership-App/node
   
   react:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     strategy:
       matrix:
         node-version: [12.x]
@@ -48,7 +48,7 @@ jobs:
       working-directory: ./Car-Dealership-App/ClientApp
       
   dotnet:    
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     
     steps:
     - uses: actions/checkout@v2
