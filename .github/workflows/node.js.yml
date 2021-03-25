@@ -28,3 +28,23 @@ jobs:
 #       currently do not have any test cases for node server
 #     - run: npm test
 #       working-directory: ./Car-Dealership-App/node
+  
+  react:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm ci
+      working-directory: ./Car-Dealership-App/ClientApp
+    - run: npm run build --if-present
+      working-directory: ./Car-Dealership-App/ClientApp
+    - run: npm test
+      working-directory: ./Car-Dealership-App/ClientApp
+  
+    
