@@ -60,7 +60,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
       
-      working-directory: Car-Dealership-App/dotnet
+#       working-directory: Car-Dealership-App/dotnet
       
     - name: Build
       run: dotnet build Car-Dealership-App/dotnet/Car-Dealership-App.csproj --no-restore
