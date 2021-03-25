@@ -46,5 +46,25 @@ jobs:
       working-directory: ./Car-Dealership-App/ClientApp
     - run: npm test
       working-directory: ./Car-Dealership-App/ClientApp
+      
+  dotnet:    
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v1.7.2
+      with:
+        # SDK version to use. Examples: 2.2.104, 3.1, 3.1.x
+          dotnet-version: 5.0.x 
+    - name: Restore dependencies
+      run: dotnet restore
+      
+      working-directory: Car-Dealership-App/dotnet
+      
+    - name: Build
+      run: dotnet build Car-Dealership-App/dotnet/Car-Dealership-App.csproj --no-restore
+    - name: Test
+      run: dotnet test Car-Dealership-App/dotnet/Car-Dealership-App.csproj --no-build --verbosity normal
   
     
