@@ -11,14 +11,10 @@ on:
 
 jobs:
   node:
-
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [12.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
@@ -29,5 +25,6 @@ jobs:
       working-directory: ./Car-Dealership-App/node
     - run: npm run build --if-present
       working-directory: ./Car-Dealership-App/node
-    - run: npm test
-      working-directory: ./Car-Dealership-App/node
+#       currently do not have any test cases for node server
+#     - run: npm test
+#       working-directory: ./Car-Dealership-App/node
