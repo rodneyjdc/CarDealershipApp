@@ -74,7 +74,7 @@ jobs:
       run: dotnet test Car-Dealership-App/dotnet/Car-Dealership-App.csproj --no-restore --verbosity normal
       
     - name: Publish locally
-      run: dotnet publish --configuration Release --output 'dotnetcorewebapp'
+      run: dotnet publish Car-Dealership-App/dotnet/Car-Dealership-App.csproj --configuration Release --output 'dotnetcorewebapp'
 
 #     - name: Upload that artefact to Azure
       
