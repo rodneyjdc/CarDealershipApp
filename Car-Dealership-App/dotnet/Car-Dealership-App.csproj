@@ -6,9 +6,9 @@
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <IsPackable>false</IsPackable>
 
-    <SpaRoot>../../ClientApp</SpaRoot>
+    <SpaRoot>../ClientApp</SpaRoot>
 
-    
+
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
     <RootNamespace>Car_Dealership_App</RootNamespace>
   </PropertyGroup>
