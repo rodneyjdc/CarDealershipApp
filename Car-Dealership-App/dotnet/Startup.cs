@@ -69,7 +69,7 @@ namespace Car_Dealership_App
 
             app.UseSpa(spa =>
             {
-                spa.Options.SourcePath = "ClientApp";
+                spa.Options.SourcePath = "../../ClientApp";
 
                 if (env.IsDevelopment())
                 {
