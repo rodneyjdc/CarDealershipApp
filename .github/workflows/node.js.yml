@@ -65,6 +65,7 @@ jobs:
           
     - name: Install the dependencies
       run: dotnet restore
+      working-directory: Car-Dealership-App/dotnet
       
     - name: Build
       run: dotnet build --configuration Release --no-restore
