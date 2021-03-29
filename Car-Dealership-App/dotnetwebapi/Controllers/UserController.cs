@@ -77,16 +77,54 @@ namespace dotnetwebapi.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public IActionResult Put(int id, User newUser) {
+        public IActionResult Put(int id, User newUser) 
+        {
+            if (ModelState.IsValid) {
+                try
+                {
+                    if(id != newUser.id) {
+                        return StatusCode(500, "wrong user.");
+                    } 
+                    else{
+                        string allText = System.IO.File.ReadAllText(@".\Data\users.json");
+                        List<User> users = JsonSerializer.Deserialize<IEnumerable<User>>(allText).ToList();
+                        List<int> Ids = users.Select(user => user.id).ToList();
+
+                        if (Ids.Exists(x => x == id)) {                                                   
+                            int indexOfExistingUser = Ids.IndexOf(id);              
+                            users[indexOfExistingUser]  = newUser;
+
+                            var usersString = JsonSerializer.Serialize(users);
+                            System.IO.File.WriteAllText(@".\Data\users.json", usersString);
+
+                            return StatusCode(200, users);
+                        } else {
+                            return StatusCode(500, "User does not exist.");
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    return StatusCode(500, e.Message);
+                }
+            }
+            return StatusCode(500, "Model or data is not valid.");
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public IActionResult Delete(int id) 
+        {
             if (ModelState.IsValid) {
                 try
                 {
                     string allText = System.IO.File.ReadAllText(@".\Data\users.json");
                     List<User> users = JsonSerializer.Deserialize<IEnumerable<User>>(allText).ToList();
+                    List<int> Ids = users.Select(user => user.id).ToList();
 
-                    if (users.Exists(user => user.id == newUser.id)) {                        
-                        int indexOfExistingUser = users.IndexOf(newUser);
-                        users[indexOfExistingUser] = newUser;
+                    if (Ids.Exists(x => x == id)) {                                                   
+                        int indexOfExistingUser = Ids.IndexOf(id);              
+                        users.Remove(users[indexOfExistingUser]);
 
                         var usersString = JsonSerializer.Serialize(users);
                         System.IO.File.WriteAllText(@".\Data\users.json", usersString);
