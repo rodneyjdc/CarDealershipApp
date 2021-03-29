@@ -55,9 +55,7 @@ namespace dotnetwebapi.Controllers
                     string allText = System.IO.File.ReadAllText(@".\Data\users.json");
                     List<User> users = JsonSerializer.Deserialize<IEnumerable<User>>(allText).ToList();
                     
-                    Console.WriteLine("does list contain newUser", users.Contains(newUser));
-                    
-                    if (!users.Contains(newUser)) {
+                    if (!(users.Exists(user => user.id == newUser.id))) {
                         users.Add(newUser);
 
                         var usersString = JsonSerializer.Serialize(users);
@@ -68,6 +66,35 @@ namespace dotnetwebapi.Controllers
                         return StatusCode(500, "User already exists.");
                     }
 
+                }
+                catch (Exception e)
+                {
+                    return StatusCode(500, e.Message);
+                }
+            }
+            return StatusCode(500, "Model or data is not valid.");
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        public IActionResult Put(int id, User newUser) {
+            if (ModelState.IsValid) {
+                try
+                {
+                    string allText = System.IO.File.ReadAllText(@".\Data\users.json");
+                    List<User> users = JsonSerializer.Deserialize<IEnumerable<User>>(allText).ToList();
+
+                    if (users.Exists(user => user.id == newUser.id)) {                        
+                        int indexOfExistingUser = users.IndexOf(newUser);
+                        users[indexOfExistingUser] = newUser;
+
+                        var usersString = JsonSerializer.Serialize(users);
+                        System.IO.File.WriteAllText(@".\Data\users.json", usersString);
+
+                        return StatusCode(200, users);
+                    } else {
+                        return StatusCode(500, "User does not exist.");
+                    }
                 }
                 catch (Exception e)
                 {
