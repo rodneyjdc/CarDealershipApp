@@ -3,8 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using dotnetwebapi.Data;
+using dotnetwebapi.DataAccess;
 using dotnetwebapi.Services;
+using dotnetwebapi.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,7 +32,8 @@ namespace dotnetwebapi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<CarDealershipDbContext>(options => options.UseSqlite(Configuration.GetConnectionString("CarDealershipDatabase")));
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IService<User>, UserService>();
+            services.AddScoped<IService<Car>, CarService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

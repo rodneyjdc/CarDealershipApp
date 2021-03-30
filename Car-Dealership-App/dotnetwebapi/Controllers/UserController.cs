@@ -13,24 +13,24 @@ namespace dotnetwebapi.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IService<User> _userService;
 
-        public UserController(IUserService userService) => _userService = userService;
+        public UserController(IService<User> userService) => _userService = userService;
 
         [HttpGet]
-        public IEnumerable<User> Get() => _userService.GetUsers();
+        public IEnumerable<User> Get() => _userService.GetAll();
 
         [HttpGet("{id}")]
-        public User Get(int id) => _userService.GetUser(id);
+        public User Get(int id) => _userService.GetById(id);
 
         [HttpPost]
-        public void Post([FromBody] User newUser) => _userService.AddUser(newUser);
+        public void Post([FromBody] User newUser) => _userService.Add(newUser);
 
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] User updatedUser) {
             try
             {
-                _userService.UpdateUser(id, updatedUser);
+                _userService.Update(id, updatedUser);
                 return Accepted();
             }
             catch (ArgumentOutOfRangeException exception)
@@ -44,7 +44,7 @@ namespace dotnetwebapi.Controllers
         public IActionResult Delete(int id){
             try
             {
-                _userService.DeleteUser(id);
+                _userService.Delete(id);
                 return base.Accepted();
             }
             catch (ArgumentException exception)

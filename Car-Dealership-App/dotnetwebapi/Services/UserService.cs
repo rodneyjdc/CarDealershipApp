@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using dotnetwebapi.Data;
-
+using dotnetwebapi.DataAccess;
 
 namespace dotnetwebapi.Services
 {
-    public class UserService : IUserService
+    public class UserService : IService<User>
     {
          private readonly CarDealershipDbContext _db;
 
@@ -15,10 +14,10 @@ namespace dotnetwebapi.Services
             _db = db;
         }
 
-        public List<User> GetUsers() => _db.Users.ToList();
-        public User GetUser(int id) => _db.Users.FirstOrDefault(user => user.UserId == id);
+        public List<User> GetAll() => _db.Users.ToList();
+        public User GetById(int id) => _db.Users.FirstOrDefault(user => user.UserId == id);
 
-        public void AddUser(User newUser)
+        public void Add(User newUser)
         {
             if (_db.Users.Any(user => user.UserId == newUser.UserId))
             {
@@ -28,7 +27,7 @@ namespace dotnetwebapi.Services
             _db.SaveChanges();
         }
 
-        public void UpdateUser(int id, User updatedUser)
+        public void Update(int id, User updatedUser)
         {
             if (_db.Users.Any(user => user.UserId == id))
             {
@@ -47,7 +46,7 @@ namespace dotnetwebapi.Services
             }
         }
 
-        public void DeleteUser(int id)
+        public void Delete(int id)
         {
             if (_db.Users.Any(user => user.UserId == id))
             {
