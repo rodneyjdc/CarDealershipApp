@@ -1,11 +1,15 @@
+  
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using dotnetwebapi.Data;
+using dotnetwebapi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,7 +30,8 @@ namespace dotnetwebapi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddDbContext<CarDealershipDbContext>(options => options.UseSqlite(Configuration.GetConnectionString("CarDealershipDatabase")));
+            services.AddScoped<IUserService, UserService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -39,6 +44,7 @@ namespace dotnetwebapi
         {
             if (env.IsDevelopment())
             {
+                InitializeDb(app.ApplicationServices);
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "dotnetwebapi v1"));
@@ -54,6 +60,20 @@ namespace dotnetwebapi
             {
                 endpoints.MapControllers();
             });
+        }
+
+        public static void InitializeDb(IServiceProvider serviceProvider)
+        {
+            var context = serviceProvider.GetRequiredService<CarDealershipDbContext>();
+
+            if (context.Database.GetPendingMigrations().Any()) {
+                context.Database.Migrate();
+            }
+            if (!context.Users.Any()) {
+                context.Users.Add(new User { FirstName = "Frodo", LastName = "Baggins", Email = "frodo@theShire.net", Username = "frodobag", Password = "password", Role = "user" });
+                context.Users.Add(new User { FirstName = "Steve", LastName = "Bishop", Email = "steve.bishop@galvanize.com", Username = "stevebis", Password = "password", Role = "user" });
+                context.SaveChanges();
+            }
         }
     }
 }

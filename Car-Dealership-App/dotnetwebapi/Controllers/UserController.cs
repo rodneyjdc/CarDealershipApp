@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
+using dotnetwebapi.Services;
 
 namespace dotnetwebapi.Controllers
 {
@@ -12,134 +13,177 @@ namespace dotnetwebapi.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult Get()
-        {
-            try
-            {
-                string allText = System.IO.File.ReadAllText(@".\Data\users.json");
-                object jsonObject = JsonSerializer.Deserialize<IEnumerable<User>>(allText);
-                return StatusCode(200, jsonObject);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
-        }
+        private readonly IUserService _userService;
+
+        public UserController(IUserService userService) => _userService = userService;
 
         [HttpGet]
-        [Route("usernames/")]
-        public IActionResult GetUsernames()
-        {
-            try
-            {
-                string allText = System.IO.File.ReadAllText(@".\Data\users.json");
-                var jsonObjects = JsonSerializer.Deserialize<IEnumerable<User>>(allText);
+        public IEnumerable<User> Get() => _userService.GetUsers();
 
-                List<String> usernames = jsonObjects.Select(user => user.username).ToList();
-
-                return StatusCode(200, usernames);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
-        }
+        [HttpGet("{id}")]
+        public User Get(int id) => _userService.GetUser(id);
 
         [HttpPost]
-        // [Route("/")]
-        public IActionResult Post(User newUser) {
-            if (ModelState.IsValid) {
-                try
-                {
-                    string allText = System.IO.File.ReadAllText(@".\Data\users.json");
-                    List<User> users = JsonSerializer.Deserialize<IEnumerable<User>>(allText).ToList();
+        public void Post([FromBody] User newUser) => _userService.AddUser(newUser);
+
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody] User updatedUser) {
+            try
+            {
+                _userService.UpdateUser(id, updatedUser);
+                return Accepted();
+            }
+            catch (ArgumentOutOfRangeException exception)
+            {
+                return base.BadRequest(exception.Message);
+            }
+            
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id){
+            try
+            {
+                _userService.DeleteUser(id);
+                return base.Accepted();
+            }
+            catch (ArgumentException exception)
+            {
+                
+                return base.BadRequest(exception.Message);
+            }
+        }
+        
+        // [HttpGet]
+        // public IActionResult Get()
+        // {
+        //     try
+        //     {
+        //         string allText = System.IO.File.ReadAllText(@".\Data\users.json");
+        //         object jsonObject = JsonSerializer.Deserialize<IEnumerable<User>>(allText);
+        //         return StatusCode(200, jsonObject);
+        //     }
+        //     catch (Exception e)
+        //     {
+        //         return StatusCode(500, e.Message);
+        //     }
+        // }
+
+        // [HttpGet]
+        // [Route("usernames/")]
+        // public IActionResult GetUsernames()
+        // {
+        //     try
+        //     {
+        //         string allText = System.IO.File.ReadAllText(@".\Data\users.json");
+        //         var jsonObjects = JsonSerializer.Deserialize<IEnumerable<User>>(allText);
+
+        //         List<String> usernames = jsonObjects.Select(user => user.username).ToList();
+
+        //         return StatusCode(200, usernames);
+        //     }
+        //     catch (Exception e)
+        //     {
+        //         return StatusCode(500, e.Message);
+        //     }
+        // }
+
+        // [HttpPost]
+        // // [Route("/")]
+        // public IActionResult Post(User newUser) {
+        //     if (ModelState.IsValid) {
+        //         try
+        //         {
+        //             string allText = System.IO.File.ReadAllText(@".\Data\users.json");
+        //             List<User> users = JsonSerializer.Deserialize<IEnumerable<User>>(allText).ToList();
                     
-                    if (!(users.Exists(user => user.id == newUser.id))) {
-                        users.Add(newUser);
+        //             if (!(users.Exists(user => user.id == newUser.id))) {
+        //                 users.Add(newUser);
 
-                        var usersString = JsonSerializer.Serialize(users);
-                        System.IO.File.WriteAllText(@".\Data\users.json", usersString);
+        //                 var usersString = JsonSerializer.Serialize(users);
+        //                 System.IO.File.WriteAllText(@".\Data\users.json", usersString);
 
-                        return StatusCode(200, users);
-                    } else {
-                        return StatusCode(500, "User already exists.");
-                    }
+        //                 return StatusCode(200, users);
+        //             } else {
+        //                 return StatusCode(500, "User already exists.");
+        //             }
 
-                }
-                catch (Exception e)
-                {
-                    return StatusCode(500, e.Message);
-                }
-            }
-            return StatusCode(500, "Model or data is not valid.");
-        }
+        //         }
+        //         catch (Exception e)
+        //         {
+        //             return StatusCode(500, e.Message);
+        //         }
+        //     }
+        //     return StatusCode(500, "Model or data is not valid.");
+        // }
 
-        [HttpPut]
-        [Route("{id}")]
-        public IActionResult Put(int id, User newUser) 
-        {
-            if (ModelState.IsValid) {
-                try
-                {
-                    if(id != newUser.id) {
-                        return StatusCode(500, "wrong user.");
-                    } 
-                    else{
-                        string allText = System.IO.File.ReadAllText(@".\Data\users.json");
-                        List<User> users = JsonSerializer.Deserialize<IEnumerable<User>>(allText).ToList();
-                        List<int> Ids = users.Select(user => user.id).ToList();
+        // [HttpPut]
+        // [Route("{id}")]
+        // public IActionResult Put(int id, User newUser) 
+        // {
+        //     if (ModelState.IsValid) {
+        //         try
+        //         {
+        //             if(id != newUser.id) {
+        //                 return StatusCode(500, "wrong user.");
+        //             } 
+        //             else{
+        //                 string allText = System.IO.File.ReadAllText(@".\Data\users.json");
+        //                 List<User> users = JsonSerializer.Deserialize<IEnumerable<User>>(allText).ToList();
+        //                 List<int> Ids = users.Select(user => user.id).ToList();
 
-                        if (Ids.Exists(x => x == id)) {                                                   
-                            int indexOfExistingUser = Ids.IndexOf(id);              
-                            users[indexOfExistingUser]  = newUser;
+        //                 if (Ids.Exists(x => x == id)) {                                                   
+        //                     int indexOfExistingUser = Ids.IndexOf(id);              
+        //                     users[indexOfExistingUser]  = newUser;
 
-                            var usersString = JsonSerializer.Serialize(users);
-                            System.IO.File.WriteAllText(@".\Data\users.json", usersString);
+        //                     var usersString = JsonSerializer.Serialize(users);
+        //                     System.IO.File.WriteAllText(@".\Data\users.json", usersString);
 
-                            return StatusCode(200, users);
-                        } else {
-                            return StatusCode(500, "User does not exist.");
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    return StatusCode(500, e.Message);
-                }
-            }
-            return StatusCode(500, "Model or data is not valid.");
-        }
+        //                     return StatusCode(200, users);
+        //                 } else {
+        //                     return StatusCode(500, "User does not exist.");
+        //                 }
+        //             }
+        //         }
+        //         catch (Exception e)
+        //         {
+        //             return StatusCode(500, e.Message);
+        //         }
+        //     }
+        //     return StatusCode(500, "Model or data is not valid.");
+        // }
 
-        [HttpDelete]
-        [Route("{id}")]
-        public IActionResult Delete(int id) 
-        {
-            if (ModelState.IsValid) {
-                try
-                {
-                    string allText = System.IO.File.ReadAllText(@".\Data\users.json");
-                    List<User> users = JsonSerializer.Deserialize<IEnumerable<User>>(allText).ToList();
-                    List<int> Ids = users.Select(user => user.id).ToList();
+        // [HttpDelete]
+        // [Route("{id}")]
+        // public IActionResult Delete(int id) 
+        // {
+        //     if (ModelState.IsValid) {
+        //         try
+        //         {
+        //             string allText = System.IO.File.ReadAllText(@".\Data\users.json");
+        //             List<User> users = JsonSerializer.Deserialize<IEnumerable<User>>(allText).ToList();
+        //             List<int> Ids = users.Select(user => user.id).ToList();
 
-                    if (Ids.Exists(x => x == id)) {                                                   
-                        int indexOfExistingUser = Ids.IndexOf(id);              
-                        users.Remove(users[indexOfExistingUser]);
+        //             if (Ids.Exists(x => x == id)) {                                                   
+        //                 int indexOfExistingUser = Ids.IndexOf(id);              
+        //                 users.Remove(users[indexOfExistingUser]);
 
-                        var usersString = JsonSerializer.Serialize(users);
-                        System.IO.File.WriteAllText(@".\Data\users.json", usersString);
+        //                 var usersString = JsonSerializer.Serialize(users);
+        //                 System.IO.File.WriteAllText(@".\Data\users.json", usersString);
 
-                        return StatusCode(200, users);
-                    } else {
-                        return StatusCode(500, "User does not exist.");
-                    }
-                }
-                catch (Exception e)
-                {
-                    return StatusCode(500, e.Message);
-                }
-            }
-            return StatusCode(500, "Model or data is not valid.");
-        }
+        //                 return StatusCode(200, users);
+        //             } else {
+        //                 return StatusCode(500, "User does not exist.");
+        //             }
+        //         }
+        //         catch (Exception e)
+        //         {
+        //             return StatusCode(500, e.Message);
+        //         }
+        //     }
+        //     return StatusCode(500, "Model or data is not valid.");
+        // }
+
+        
     }
 }
