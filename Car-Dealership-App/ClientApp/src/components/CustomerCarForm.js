@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Dropdown } from 'react-bootstrap'
 import { connect } from "react-redux";
 import axios from "axios";
-
+import DropdownButton from 'react-bootstrap/DropdownButton';
 
 export class CustomerCarForm extends Component {
   static displayName = CustomerCarForm.name;
@@ -10,6 +10,10 @@ export class CustomerCarForm extends Component {
   state = {
     car: {},
     formSubmitted: false,
+    rulesList: [],
+    makeList: [],
+    modelList: [],
+    yearList: []
     // acceptanceRules: {
     //   year:
     // }
@@ -17,14 +21,67 @@ export class CustomerCarForm extends Component {
 
   //state = { selectedFile: null };
 
+  componentDidMount() {
+    this.getRules();
+  };
+  getRules() {
+    fetch("http://localhost:5000/mongo/api/rules", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      // body: JSON.stringify(newRule),
+    })
+
+      .then((result) => result.json())
+      //.then((result) => console.log("Result from API: ", result))
+      .then((result) => this.updateRules(result))
+      .catch((e) => console.log(e))
+  }
+  updateRules = (rules) => {
+    this.setState(prevState => ({
+      ...prevState,
+      rulesList: rules,
+    }));
+
+    let makesUniqueArray = [...new Set(rules.map(item => item.make))];
+    this.setState(prevState => ({
+      ...prevState,
+      makeList: makesUniqueArray,
+    }));
+
+    console.log("Inside updateMakes: ", this.state.makeList);
+  };
+  setMake = (event) => {
+    this.setState(prevState => ({
+      ...prevState,
+      make: event
+    }));
+
+    // set model
+    let models = this.state.rulesList.filter(x => x.make == event);
+    let makesUniqueArray = [...new Set(models.map(item => item.model))];
+    this.setState(prevState => ({
+      ...prevState,
+      modelList: makesUniqueArray,
+    }));
+
+  }
+  setModel = (event) => {
+    this.setState(prevState => ({
+      ...prevState,
+      model: event
+    }));
+  }
   fileChangedHandler = (event) => {
-   event.persist();
-   this.setState((prevState) => ({
-     car: {
-       ...prevState.car,
-       [event.target.name]: event.target.files[0],   
-     },
-   }));
+    event.persist();
+    this.setState((prevState) => ({
+      car: {
+        ...prevState.car,
+        [event.target.name]: event.target.files[0],
+      },
+    }));
   };
 
   uploadHandler = () => {
@@ -70,19 +127,39 @@ export class CustomerCarForm extends Component {
             onChange={this.handleInputChange}
           />
           <Form.Label>Make: </Form.Label>
-          <Form.Control
+          <DropdownButton
+            title="Choose a Make"
+            type="input"
+            name="make"
+            placeholder="make"
+          >
+            {this.state.makeList.map(elt => {
+              return (<Dropdown.Item eventKey={elt} onSelect={(event) => this.setMake(event)}> {elt} </Dropdown.Item>)
+            })}
+          </DropdownButton>
+          {/* <Form.Control
             type="input"
             name="make"
             placeholder="make"
             onChange={this.handleInputChange}
-          />
+          /> */}
           <Form.Label>Model: </Form.Label>
-          <Form.Control
+          <DropdownButton
+            title="Choose a Model"
+            type="input"
+            name="model"
+            placeholder="model"
+          >
+            {this.state.modelList.map(elt => {
+              return (<Dropdown.Item eventKey={elt} onSelect={(event) => this.setModel(event)}> {elt} </Dropdown.Item>)
+            })}
+          </DropdownButton>
+          {/* <Form.Control
             type="input"
             name="model"
             placeholder="model"
             onChange={this.handleInputChange}
-          />
+          /> */}
           <Form.Label>Year: </Form.Label>
           <Form.Control
             type="input"
@@ -120,4 +197,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(CustomerCarForm); 
+export default connect(mapStateToProps)(CustomerCarForm);

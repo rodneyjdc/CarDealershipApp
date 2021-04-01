@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Listing = require("../../models/car.js");
+const Rules = require("../../models/rules.js");
 const Users = require("../../models/user.js");
 
 router.post("/api/cars", ({ body }, res) => {
@@ -93,6 +94,27 @@ router.post("/api/users", ({ body }, res) => {
 router.delete("/api/users/:id", (req, res) => {
   const { id } = req.params;
   Users.deleteOne({_id: id})
+    .then((dbListing) => {
+      res.json(dbListing);
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+});
+
+// Acceptance Rules
+router.post("/api/rules", ({ body }, res) => {
+  Rules.create(body)
+    .then((dbListing) => {
+      res.json(dbListing);
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+});
+
+router.get("/api/rules", (req, res) => {
+  Rules.find({})
     .then((dbListing) => {
       res.json(dbListing);
     })
