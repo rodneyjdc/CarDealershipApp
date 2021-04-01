@@ -73,6 +73,20 @@ export class CustomerCarForm extends Component {
       ...prevState,
       model: event
     }));
+
+    // set year
+    let models = this.state.rulesList.filter(x => x.make == this.state.make && x.model==event);
+    let makesUniqueArray = [...new Set(models.map(item => item.year))];
+    this.setState(prevState => ({
+      ...prevState,
+      yearList: makesUniqueArray,
+    }));
+  }
+  setYear = (event) => {
+    this.setState(prevState => ({
+      ...prevState,
+      year: event
+    }));
   }
   fileChangedHandler = (event) => {
     event.persist();
@@ -126,7 +140,7 @@ export class CustomerCarForm extends Component {
             placeholder="owner"
             onChange={this.handleInputChange}
           />
-          <Form.Label>Make: </Form.Label>
+          <Form.Label>Make: {this.state.make} </Form.Label>
           <DropdownButton
             title="Choose a Make"
             type="input"
@@ -143,7 +157,7 @@ export class CustomerCarForm extends Component {
             placeholder="make"
             onChange={this.handleInputChange}
           /> */}
-          <Form.Label>Model: </Form.Label>
+          <Form.Label>Model: {this.state.model} </Form.Label>
           <DropdownButton
             title="Choose a Model"
             type="input"
@@ -154,19 +168,30 @@ export class CustomerCarForm extends Component {
               return (<Dropdown.Item eventKey={elt} onSelect={(event) => this.setModel(event)}> {elt} </Dropdown.Item>)
             })}
           </DropdownButton>
+          
           {/* <Form.Control
             type="input"
             name="model"
             placeholder="model"
             onChange={this.handleInputChange}
           /> */}
-          <Form.Label>Year: </Form.Label>
-          <Form.Control
+          <Form.Label>Year: {this.state.year} </Form.Label>
+          <DropdownButton
+            title="Choose a Year"
+            type="input"
+            name="year"
+            placeholder="year"
+          >
+            {this.state.yearList.map(elt => {
+              return (<Dropdown.Item eventKey={elt} onSelect={(event) => this.setYear(event)}> {elt} </Dropdown.Item>)
+            })}
+          </DropdownButton>
+          {/* <Form.Control
             type="input"
             name="year"
             placeholder="year"
             onChange={this.handleInputChange}
-          />
+          /> */}
           <Form.Label>Color: </Form.Label>
           <Form.Control
             type="input"
