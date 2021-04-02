@@ -12,7 +12,7 @@ namespace ServicesTests
         public CarServiceTests()
                 : base(
                     new DbContextOptionsBuilder<CarDealershipDbContext>()
-                        .UseSqlite("Data Source=C:\\Users\\Rodney\\Desktop\\LTI Resources\\training projects\\course-demos\\03302021\\EFGetStarted\\CarDealershipTestDB.db")
+                        .UseSqlite("Data Source=C:\\MyProjects\\LTI\\rodney_val\\CarDealershipApp\\CarDealershipDB.db")
                         .Options)
         {
         }
@@ -26,7 +26,7 @@ namespace ServicesTests
 
                 var cars = carService.GetAll();
 
-                Assert.Equal(4, cars.Count);
+                Assert.Equal(3, cars.Count);
             }
         }
 
