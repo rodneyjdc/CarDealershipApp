@@ -146,11 +146,25 @@ class AcceptanceRules extends Component {
 
   submitAcceptanceRule = (event) => {
     event.preventDefault();
-    const rule = {
+    const newRule = {
+      make:this.state.make,
       model: this.state.model,
       year: this.state.year
     };
-    this.props.dispatch(changeRULES(rule));
+
+    //make api call here
+    fetch("http://localhost:5000/mongo/api/rules", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify(newRule),
+    })
+      .then((result) => result.json())
+      .then((result) => console.log("result", result))
+      .catch((e) => console.log(e));
+   // this.props.dispatch(changeRULES(rule));
   }
 
   render() {

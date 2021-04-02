@@ -23,10 +23,12 @@ namespace ServicesTests
             using (var context = new CarDealershipDbContext(ContextOptions))
             {
                 var carService = new CarService(context);
-
                 var cars = carService.GetAll();
 
                 Assert.Equal(3, cars.Count);
+                Assert.Equal("Valentin", cars[0].Seller);
+                Assert.Equal("Vandit", cars[1].Seller);
+                Assert.Equal("Rodney", cars[2].Seller);
             }
         }
 
