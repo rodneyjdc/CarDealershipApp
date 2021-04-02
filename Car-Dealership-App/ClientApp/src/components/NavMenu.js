@@ -22,11 +22,12 @@ export class NavMenu extends Component {
     });
   }
 
+
   render() {
     return (
       <header>
         <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
-          <Container>``
+          <Container>
             <NavbarBrand tag={Link} to="/">Car Dealership App</NavbarBrand>
             <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
             <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
@@ -37,14 +38,14 @@ export class NavMenu extends Component {
                 <NavItem>
                   <NavLink tag={Link} className="text-dark" to="/inventory">Inventory</NavLink>
                 </NavItem>
-                <NavItem>
+                {/* <NavItem>
                   <NavLink tag={Link} className="text-dark" to="/customerCarForm">Sell-My-Car</NavLink>
-                </NavItem>
+                </NavItem> */}
                 <NavItem>
                   <NavLink tag={Link} className="text-dark" to="/acceptanceRules">Acceptance Rules</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/login">Log In</NavLink>
+                  <NavLink tag={Link} className="text-dark" to="/logOut">Log Out</NavLink>
                 </NavItem>
               </ul>
             </Collapse>

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Form, Button, Dropdown } from 'react-bootstrap'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import { connect } from "react-redux";
-import { changeRULES } from '../redux/store';
 
 class AcceptanceRules extends Component {
   static displayName = AcceptanceRules.name;
@@ -171,7 +170,7 @@ class AcceptanceRules extends Component {
     // console.log("Make: ", this.state.make);
     // console.log("Model: ", this.state.model);
     // console.log("Year ", this.state.year);
-    return (
+    return this.props.isAdmin ? (
       <div>
         <h2>Acceptance Rules Form </h2>
         <p><em>*Currently manufacturer is hardcoded to be Honda*</em></p>
@@ -196,6 +195,10 @@ class AcceptanceRules extends Component {
           {this.state.make && this.state.model && this.displayButton()}
         </Form>
       </div>
+    ) : (
+      <div>
+        <h1> Sorry, you do not have access to this page. </h1>
+      </div>
     );
   }
 }
@@ -203,6 +206,7 @@ class AcceptanceRules extends Component {
 function mapStateToProps(state) {
   return {
     username: state.username,
+    isAdmin: state.isAdmin,
     acceptanceRules: state.acceptanceRules
   };
 }

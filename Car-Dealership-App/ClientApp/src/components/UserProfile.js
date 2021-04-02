@@ -15,7 +15,7 @@ export class UserProfile extends React.Component {
     
 
     getCars = () => {
-        fetch("https://localhost:5000/mongo/api/cars", {
+        fetch("http://localhost:5000/mongo/api/cars", {
             method: 'GET',
             headers: {
                 'Accept': 'application/json'
@@ -78,23 +78,12 @@ export class UserProfile extends React.Component {
 
     render() {
 
-       return this.props.loggedIn ? (
+       return (
          <>
            <h1>Welcome {this.props.location.state.name}!</h1>
            <br></br>
            <br></br>
            {this.displayCars(this.state.name)}
-         </>
-       ) : (
-         <>
-           <> please log in first</>
-           <Link
-             to={{
-               pathname: "/Login",
-             }}
-           >
-             Log in
-           </Link>
          </>
        )
     }

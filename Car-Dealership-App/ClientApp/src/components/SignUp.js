@@ -124,7 +124,6 @@ export class SignUp extends Component {
   displayForm = () => {
     return (
       <>
-        <p>Inside sign up page</p>
         {this.state.errorArea}
         <Container>
           <Row>
@@ -162,7 +161,7 @@ export class SignUp extends Component {
                     />
                     <br></br>
                     <Form.Control
-                      type="input"
+                      type="password"
                       placeholder="password"
                       onChange={(e) => this.handleInputChange(e)}
                       name="password"

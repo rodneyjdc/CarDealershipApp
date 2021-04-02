@@ -16,8 +16,8 @@ export class Home extends Component {
               wroker ready to help you anytime, anywhere and at no cost. Your satisfaction is our priority.  
               By adding your car in our listing you can consider it sell at the best price available in the market.</p>
             <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-            <Link to={{ pathname: '/customerCarForm', }} class="btn btn-primary btn-lg px-4 me-sm-3"> Sell-My-Car </Link>
-              <button type="button" class="btn btn-outline-secondary btn-lg px-4">Login</button>
+            {/* <Link to={{ pathname: '/customerCarForm', }} class="btn btn-outline-secondary btn-lg px-4"> Sell-My-Car </Link> */}
+            <Link to={{ pathname: '/login', }} class="btn btn-primary btn-lg px-4 me-sm-3"> Login </Link> 
             </div>
           </div>
         </div>

@@ -60,7 +60,7 @@ export class CustomerCarForm extends Component {
     }));
 
     // set model
-    let models = this.state.rulesList.filter(x => x.make == event);
+    let models = this.state.rulesList.filter(x => x.make === event);
     let makesUniqueArray = [...new Set(models.map(item => item.model))];
     this.setState(prevState => ({
       ...prevState,
@@ -75,7 +75,7 @@ export class CustomerCarForm extends Component {
     }));
 
     // set year
-    let models = this.state.rulesList.filter(x => x.make == this.state.make && x.model==event);
+    let models = this.state.rulesList.filter(x => x.make === this.state.make && x.model===event);
     let makesUniqueArray = [...new Set(models.map(item => item.year))];
     this.setState(prevState => ({
       ...prevState,
@@ -131,15 +131,18 @@ export class CustomerCarForm extends Component {
     console.log(this.props);
     return (
       <div>
-        <h2>Car Form {this.props.username}</h2>
+        <h2>Car Form </h2>
         <Form onSubmit={this.submitCar}>
           <Form.Label>Owner: </Form.Label>
           <Form.Control
             type="input"
             name="owner"
             placeholder="owner"
+            value={this.props.currentUser.firstName + " " + this.props.currentUser.lastName}
             onChange={this.handleInputChange}
+            disabled
           />
+          <br></br>
           <Form.Label>Make: {this.state.make} </Form.Label>
           <DropdownButton
             title="Choose a Make"
@@ -151,6 +154,7 @@ export class CustomerCarForm extends Component {
               return (<Dropdown.Item eventKey={elt} onSelect={(event) => this.setMake(event)}> {elt} </Dropdown.Item>)
             })}
           </DropdownButton>
+          <br></br>
           {/* <Form.Control
             type="input"
             name="make"
@@ -168,7 +172,7 @@ export class CustomerCarForm extends Component {
               return (<Dropdown.Item eventKey={elt} onSelect={(event) => this.setModel(event)}> {elt} </Dropdown.Item>)
             })}
           </DropdownButton>
-          
+          <br></br>
           {/* <Form.Control
             type="input"
             name="model"
@@ -186,6 +190,7 @@ export class CustomerCarForm extends Component {
               return (<Dropdown.Item eventKey={elt} onSelect={(event) => this.setYear(event)}> {elt} </Dropdown.Item>)
             })}
           </DropdownButton>
+          <br></br>
           {/* <Form.Control
             type="input"
             name="year"
@@ -199,6 +204,7 @@ export class CustomerCarForm extends Component {
             placeholder="color"
             onChange={this.handleInputChange}
           />
+          <br></br>
           <Form.Label>Image: </Form.Label>
           <Form.Control
             type="file"
@@ -206,9 +212,12 @@ export class CustomerCarForm extends Component {
             placeholder="image"
             onChange={this.fileChangedHandler}
           />
+          <br></br>
           <Button onClick={this.uploadHandler}>Upload!</Button>
 
           <br></br>
+          <br></br>
+          <hr></hr>
           <Button type="submit">Submit</Button>
         </Form>
       </div>
@@ -219,6 +228,8 @@ export class CustomerCarForm extends Component {
 function mapStateToProps(state) {
   return {
     username: state.username,
+    firstName: state.firstName,
+    currentUser: state.currentUser
   };
 }
 

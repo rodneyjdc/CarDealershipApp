@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import CustomerCarForm from './CustomerCarForm';
 import { Card, Container, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import { createNoSubstitutionTemplateLiteral } from 'typescript';
+import { NavMenu } from './NavMenu';
 
 export class Inventory extends Component {
   static displayName = Inventory.name;
@@ -15,15 +17,15 @@ export class Inventory extends Component {
 
   componentDidMount() {
     this.intitializeTestData();
-    fetch("https://localhost:5001/api/Inventory", {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json'
-      }
-    })
-      .then((result) => result.json())
-      .then((result) => this.mergeInventory(result))
-      .catch((e) => console.log(e))
+    // fetch("https://localhost:5000/api/Inventory", {
+    //   method: 'GET',
+    //   headers: {
+    //     'Accept': 'application/json'
+    //   }
+    // })
+    //   .then((result) => result.json())
+    //   .then((result) => this.mergeInventory(result))
+    //   .catch((e) => console.log(e))
   }
 
   mergeInventory = (cars) => {
@@ -100,6 +102,7 @@ export class Inventory extends Component {
   }
 
   render() {
+    console.log("this.props", this.props)
     return (
       <div>
         <CustomerCarForm addCar={this.mergeInventory} />
