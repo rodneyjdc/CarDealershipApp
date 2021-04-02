@@ -24,6 +24,20 @@ Bin/
 obj/
 Obj/
 
+# Migrations
+/Migrations
+
+# Packages
+package-lock.json
+
+# DB
+*Db.*
+
+appsettings.json
+appsettings.Development.json
+**/appsettings.json
+**/appsettings.Development.json
+
 # Visual Studio 2015 cache/options directory
 .vs/
 /wwwroot/dist/
