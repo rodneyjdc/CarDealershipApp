@@ -9,8 +9,8 @@ using dotnetwebapi.DataAccess;
 namespace dotnetwebapi.Migrations
 {
     [DbContext(typeof(CarDealershipDbContext))]
-    [Migration("20210330214149_CreateCarTable")]
-    partial class CreateCarTable
+    [Migration("20210401201643_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

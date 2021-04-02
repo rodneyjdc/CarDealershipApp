@@ -23,6 +23,8 @@ namespace ServicesTests
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
+                // --------------------------------------------------------
+                // Seed data for cars
                 context.Cars.Add(new Car { 
                     CarId = 1, 
                     Name = "Car 1", 
@@ -49,6 +51,37 @@ namespace ServicesTests
                     Seller = "Rodney", 
                     Image = "", 
                     Date = new DateTime(2021, 01, 01) });
+
+                
+                // --------------------------------------------------------
+                // Seed data for users
+
+                context.Users.Add(new User { 
+                    UserId = 1, 
+                    FirstName = "Rodney", 
+                    LastName = "C", 
+                    Email = "rodney@gmail.com", 
+                    Username = "rodneyc", 
+                    Password = "password", 
+                    Role = "admin"});
+                
+                context.Users.Add(new User { 
+                    UserId = 2, 
+                    FirstName = "Valentin", 
+                    LastName = "E", 
+                    Email = "valentin@gmail.com", 
+                    Username = "valentine", 
+                    Password = "password", 
+                    Role = "user"});
+
+                context.Users.Add(new User { 
+                    UserId = 3, 
+                    FirstName = "Vandit", 
+                    LastName = "A", 
+                    Email = "vandit@gmail.com", 
+                    Username = "vandita", 
+                    Password = "password", 
+                    Role = "user"});
 
                 context.SaveChanges();
             }
