@@ -12,7 +12,7 @@ namespace ServicesTests
         public CarServiceTests()
                 : base(
                     new DbContextOptionsBuilder<CarDealershipDbContext>()
-                        .UseSqlite("Data Source=C:\\Users\\Rodney\\Desktop\\LTI Resources\\training projects\\CarDealershipApp\\Car-Dealership-App\\dotnetwebapi\\Sqlite\\CarDealershipTestDB.db")
+                        .UseSqlite("Data Source=C:\\MyProjects\\LTI\\rodney_val\\CarDealershipApp\\CarDealershipDB.db")
                         .Options)
         {
         }
