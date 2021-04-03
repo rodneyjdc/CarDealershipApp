@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Form, Button, Dropdown } from 'react-bootstrap'
+import { Form, Button, Dropdown, Container, Row, Col, Card } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import { connect } from "react-redux";
 import axios from "axios";
 import DropdownButton from 'react-bootstrap/DropdownButton';
@@ -55,8 +56,14 @@ export class CustomerCarForm extends Component {
   };
   setMake = (event) => {
     this.setState(prevState => ({
-      ...prevState,
-      make: event
+      // ...prevState,
+      // make: event
+
+      car: {
+        ...prevState.car,
+        make: event,
+      },
+
     }));
 
     // set model
@@ -70,22 +77,38 @@ export class CustomerCarForm extends Component {
   }
   setModel = (event) => {
     this.setState(prevState => ({
-      ...prevState,
-      model: event
+      // ...prevState,
+      // model: event
+
+      car: {
+        ...prevState.car,
+        model: event,
+      },
+
     }));
 
     // set year
-    let models = this.state.rulesList.filter(x => x.make === this.state.make && x.model===event);
+    let models = this.state.rulesList.filter(x => x.make === this.state.car.make && x.model === event);
     let makesUniqueArray = [...new Set(models.map(item => item.year))];
+
+    console.log("unique year array", makesUniqueArray)
+
     this.setState(prevState => ({
       ...prevState,
       yearList: makesUniqueArray,
     }));
   }
+
   setYear = (event) => {
     this.setState(prevState => ({
-      ...prevState,
-      year: event
+      // ...prevState,
+      // year: event
+
+      car: {
+        ...prevState.car,
+        year: event,
+      },
+
     }));
   }
   fileChangedHandler = (event) => {
@@ -124,26 +147,142 @@ export class CustomerCarForm extends Component {
     // }
 
     this.props.addCar(this.state.car);
+
+    console.log("this.state.car", this.state.car);
+    console.log("this.state.car.year", this.state.car.year);
+
+    //make api call here
+    fetch("http://localhost:5000/mongo/api/cars", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify(this.state.car),
+    })
+      .then((result) => result.json())
+      .then((result) => console.log("result", result))
+      .catch((e) => console.log(e));
+
+    // console.log(newUser.toString());
+
+    console.log("end of submitCar");
+
   };
 
   render() {
     console.log(this.props.username);
     console.log(this.props);
+    console.log("this.state.yearList", this.state.yearList);
+    console.log("this.state.modelList", this.state.modelList);
     return (
       <div>
-        <h2>Car Form </h2>
-        <Form onSubmit={this.submitCar}>
+        <Container>
+          <Row></Row>
+          <Row>
+            <Col>
+              <Card>
+                <Card.Header>Car Form</Card.Header>
+                <Form onSubmit={this.submitCar}>
+                  <Card.Body>
+
+
+                    <Form.Label>Owner: </Form.Label>
+                    <Form.Control
+                      type="input"
+                      name="owner"
+                      placeholder="owner"
+                      // value={this.props.currentUser.firstName + " " + this.props.currentUser.lastName}
+                      onChange={this.handleInputChange}
+                    // disabled
+                    />
+                    <br></br>
+                    <Form.Label>Make: {this.state.car.make} </Form.Label>
+                    <DropdownButton
+                      title="Choose a Make"
+                      type="input"
+                      name="make"
+                      placeholder="make"
+                    >
+                      {this.state.makeList.map(elt => {
+                        return (<Dropdown.Item eventKey={elt} onSelect={(event) => this.setMake(event)}> {elt} </Dropdown.Item>)
+                      })}
+                    </DropdownButton>
+                    <br></br>
+                    <Form.Label>Model: {this.state.car.model} </Form.Label>
+                    <DropdownButton
+                      title="Choose a Model"
+                      type="input"
+                      name="model"
+                      placeholder="model"
+                    >
+                      {this.state.modelList.map(elt => {
+                        return (<Dropdown.Item eventKey={elt} onSelect={(event) => this.setModel(event)}> {elt} </Dropdown.Item>)
+                      })}
+                    </DropdownButton>
+                    <br></br>
+                    <Form.Label>Year: {this.state.car.year} </Form.Label>
+                    <DropdownButton
+                      title="Choose a Year"
+                      type="input"
+                      name="year"
+                      placeholder="year"
+                    >
+                      {this.state.yearList.map(elt => {
+                        return (<Dropdown.Item eventKey={elt} onSelect={(event) => this.setYear(event)}> {elt} </Dropdown.Item>)
+                      })}
+                    </DropdownButton>
+                    <br></br>
+                    <Form.Label>Color: </Form.Label>
+                    <Form.Control
+                      type="input"
+                      name="color"
+                      placeholder="color"
+                      onChange={this.handleInputChange}
+                    />
+                    <br></br>
+                    <Form.Label>Price: </Form.Label>
+                    <Form.Control
+                      type="input"
+                      name="price"
+                      placeholder="price"
+                      onChange={this.handleInputChange}
+                    />
+                    <br></br>
+                    <Form.Label>Image: </Form.Label>
+                    <Form.Control
+                      type="file"
+                      name="image"
+                      placeholder="image"
+                      onChange={this.fileChangedHandler}
+                    />
+                    <br></br>
+                    <Button onClick={this.uploadHandler}>Upload!</Button>
+                  </Card.Body>
+
+                  <Card.Footer>
+                    <Button type="submit">Submit</Button>
+
+                  </Card.Footer>
+                </Form>
+
+              </Card>
+            </Col>
+          </Row>
+        </Container>
+
+        {/* <Form onSubmit={this.submitCar}>
           <Form.Label>Owner: </Form.Label>
           <Form.Control
             type="input"
             name="owner"
             placeholder="owner"
-            value={this.props.currentUser.firstName + " " + this.props.currentUser.lastName}
+            // value={this.props.currentUser.firstName + " " + this.props.currentUser.lastName}
             onChange={this.handleInputChange}
-            disabled
+          // disabled
           />
           <br></br>
-          <Form.Label>Make: {this.state.make} </Form.Label>
+          <Form.Label>Make: {this.state.car.make} </Form.Label>
           <DropdownButton
             title="Choose a Make"
             type="input"
@@ -155,13 +294,7 @@ export class CustomerCarForm extends Component {
             })}
           </DropdownButton>
           <br></br>
-          {/* <Form.Control
-            type="input"
-            name="make"
-            placeholder="make"
-            onChange={this.handleInputChange}
-          /> */}
-          <Form.Label>Model: {this.state.model} </Form.Label>
+          <Form.Label>Model: {this.state.car.model} </Form.Label>
           <DropdownButton
             title="Choose a Model"
             type="input"
@@ -173,13 +306,7 @@ export class CustomerCarForm extends Component {
             })}
           </DropdownButton>
           <br></br>
-          {/* <Form.Control
-            type="input"
-            name="model"
-            placeholder="model"
-            onChange={this.handleInputChange}
-          /> */}
-          <Form.Label>Year: {this.state.year} </Form.Label>
+          <Form.Label>Year: {this.state.car.year} </Form.Label>
           <DropdownButton
             title="Choose a Year"
             type="input"
@@ -191,17 +318,19 @@ export class CustomerCarForm extends Component {
             })}
           </DropdownButton>
           <br></br>
-          {/* <Form.Control
-            type="input"
-            name="year"
-            placeholder="year"
-            onChange={this.handleInputChange}
-          /> */}
           <Form.Label>Color: </Form.Label>
           <Form.Control
             type="input"
             name="color"
             placeholder="color"
+            onChange={this.handleInputChange}
+          />
+          <br></br>
+          <Form.Label>Price: </Form.Label>
+          <Form.Control
+            type="input"
+            name="price"
+            placeholder="price"
             onChange={this.handleInputChange}
           />
           <br></br>
@@ -219,7 +348,7 @@ export class CustomerCarForm extends Component {
           <br></br>
           <hr></hr>
           <Button type="submit">Submit</Button>
-        </Form>
+        </Form> */}
       </div>
     );
   }

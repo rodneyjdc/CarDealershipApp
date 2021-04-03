@@ -17,15 +17,21 @@ export class Inventory extends Component {
 
   componentDidMount() {
     this.intitializeTestData();
-    // fetch("https://localhost:5000/api/Inventory", {
-    //   method: 'GET',
-    //   headers: {
-    //     'Accept': 'application/json'
-    //   }
-    // })
-    //   .then((result) => result.json())
-    //   .then((result) => this.mergeInventory(result))
-    //   .catch((e) => console.log(e))
+    fetch("http://localhost:5000/mongo/api/cars", {
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+                // "Content-Type": "application/json",
+                // "Access-Control-Allow-Origin": "*",
+            },
+        })
+            .then((result) => result.json())
+            .then((result) => {
+                this.setState({
+                   listedCars: result,
+                });
+            })
+            .catch((e) => console.log(e));
   }
 
   mergeInventory = (cars) => {
@@ -88,6 +94,7 @@ export class Inventory extends Component {
                     <Row>Model: {listedCars[i].model}</Row>
                     <Row>Year: {listedCars[i].year}</Row>
                     <Row>Color: {listedCars[i].color}</Row>
+                    <Row>Price: ${listedCars[i].price}</Row>
                   </Container>
                 </Card.Text>
                 <Card.Link href="#">Card Link</Card.Link>
@@ -105,6 +112,8 @@ export class Inventory extends Component {
     console.log("this.props", this.props)
     return (
       <div>
+        <h2>Welcome!</h2>
+        <br></br>
         <CustomerCarForm addCar={this.mergeInventory} />
         <br></br>
         <hr></hr>

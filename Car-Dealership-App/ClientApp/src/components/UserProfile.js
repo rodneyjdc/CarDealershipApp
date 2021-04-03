@@ -35,7 +35,7 @@ export class UserProfile extends React.Component {
     getUserCars = (ownerName) => {
         console.log("inside getUserCars, this.state.carsList", this.state.carsList)
         console.log("inside getUsersCars");
-        console.log(ownerName);
+        console.log("parameter ownerName:", ownerName);
 
         const result = this.state.carsList.filter((car) => {
             console.log("inside filter func");
@@ -64,6 +64,7 @@ export class UserProfile extends React.Component {
                                         <Row>Model: {car.model}</Row>
                                         <Row>Year: {car.year}</Row>
                                         <Row>Color: {car.color}</Row>
+                                        <Row>Price: ${car.price}</Row>
                                     </Container>
                                 </Card.Text>
                             </Card.Body>
@@ -80,10 +81,10 @@ export class UserProfile extends React.Component {
 
        return (
          <>
-           <h1>Welcome {this.props.location.state.name}!</h1>
+           <h1>Welcome {this.props.location.state.ownerName}!</h1>
            <br></br>
            <br></br>
-           {this.displayCars(this.state.name)}
+           {this.displayCars(this.props.location.state.ownerName)}
          </>
        )
     }
