@@ -27,9 +27,9 @@ namespace ServicesTests
                 var cars = carService.GetAll();
 
                 Assert.Equal(3, cars.Count);
-                Assert.Equal("Valentin", cars[0].Seller);
-                Assert.Equal("Vandit", cars[1].Seller);
-                Assert.Equal("Rodney", cars[2].Seller);
+                Assert.Equal("Valentin", cars[0].Owner);
+                Assert.Equal("Vandit", cars[1].Owner);
+                Assert.Equal("Rodney", cars[2].Owner);
             }
         }
 
@@ -44,7 +44,7 @@ namespace ServicesTests
                 var car = carService.GetById(carId);
 
                 Assert.NotNull(car);
-                Assert.Equal("Car 1", car.Name);
+                Assert.Equal("Car 1", car.Make);
             }
         }
 
@@ -56,12 +56,14 @@ namespace ServicesTests
                 var carService = new CarService(context);
                 Car newCar = new Car()
                 {
-                    CarId = 4,
-                    Name = "New Car",
-                    Price = 5000,
-                    Location = "Los Angeles",
-                    Seller = "Mike",
-                    Image = "",
+                    CarId = 5, 
+                    Make = "New car", 
+                    Model = "New car", 
+                    Year = 2000,
+                    Color = "blue",
+                    Price = 6000, 
+                    Owner = "Rodney", 
+                    Image = "", 
                     Date = new DateTime(2021, 01, 01)
                 };
 
@@ -80,11 +82,13 @@ namespace ServicesTests
                 var carService = new CarService(context);
                 Car existingCar = new Car()
                 {
-                    CarId = 3, 
-                    Name = "Car 3", 
-                    Price = 1245, 
-                    Location = "Italia", 
-                    Seller = "Rodney", 
+                    CarId = 2, 
+                    Make = "Car 2", 
+                    Model = "Car 2", 
+                    Year = 2000,
+                    Color = "blue",
+                    Price = 6000, 
+                    Owner = "Rodney", 
                     Image = "", 
                     Date = new DateTime(2021, 01, 01)
                 };
@@ -102,12 +106,14 @@ namespace ServicesTests
                 int carId = 1;
                 Car updatedCar = new Car()
                 {
-                    CarId = 1,
-                    Name = "Updated Car",
-                    Price = 2018,
-                    Location = "Action",
-                    Seller = "Valentin",
-                    Image = "",
+                    CarId = 2, 
+                    Make = "Updated Car", 
+                    Model = "Updated Car", 
+                    Year = 2000,
+                    Color = "blue",
+                    Price = 6000, 
+                    Owner = "Rodney", 
+                    Image = "", 
                     Date = new DateTime(2021, 01, 01)
                 };
 
@@ -115,7 +121,7 @@ namespace ServicesTests
                 var car = carService.GetById(carId);
 
                 Assert.NotNull(car);
-                Assert.Equal("Updated Car", car.Name);
+                Assert.Equal("Updated Car", car.Make);
             }
         }
 
@@ -125,15 +131,17 @@ namespace ServicesTests
             using (var context = new CarDealershipDbContext(ContextOptions))
             {
                 var carService = new CarService(context);
-                int nonExistentCarId = 5;
+                int nonExistentCarId = 99;
                 Car updatedCar = new Car()
                 {
-                    CarId = 5,
-                    Name = "Updated Car",
-                    Price = 2018,
-                    Location = "Action",
-                    Seller = "Valentin",
-                    Image = "",
+                    CarId = 99, 
+                    Make = "Car 2", 
+                    Model = "Car 2", 
+                    Year = 2000,
+                    Color = "blue",
+                    Price = 6000, 
+                    Owner = "Rodney", 
+                    Image = "", 
                     Date = new DateTime(2021, 01, 01)
                 };
 
@@ -153,7 +161,7 @@ namespace ServicesTests
                 var cars = carService.GetAll();
 
                 Assert.Equal(2, cars.Count);
-                Assert.Equal("Car 2", cars[0].Name);
+                Assert.Equal("Car 2", cars[0].Make);
             }
         }
 

@@ -10,7 +10,7 @@ using dotnetwebapi.Services;
 namespace dotnetwebapi.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("dotnetApi/[controller]")]
     public class UserController : ControllerBase
     {
         private readonly IService<User> _userService;

@@ -9,7 +9,7 @@ namespace dotnetwebapi.Services
 {
     public class CarService : IService<Car>
     {
-         private readonly CarDealershipDbContext _db;
+        private readonly CarDealershipDbContext _db;
 
         public CarService(CarDealershipDbContext db)
         {
@@ -29,16 +29,19 @@ namespace dotnetwebapi.Services
             _db.SaveChanges();
         }
 
-        public void Update(int id, Car updatedCar)
+        public void Update(int id, Car updatedData)
         {
             if (_db.Cars.Any(car => car.CarId == id))
             {
                 var carToUpdate = _db.Cars.First(car => car.CarId == id);
-                carToUpdate.Name = updatedCar.Name;
-                carToUpdate.Price = updatedCar.Price;
-                carToUpdate.Location = updatedCar.Seller;
-                carToUpdate.Image = updatedCar.Image;
-                carToUpdate.Date = updatedCar.Date;
+                carToUpdate.Owner = updatedData.Owner;
+                carToUpdate.Make = updatedData.Make;
+                carToUpdate.Model = updatedData.Model;
+                carToUpdate.Year = updatedData.Year;
+                carToUpdate.Color = updatedData.Color;
+                carToUpdate.Price = updatedData.Price;
+                carToUpdate.Image = updatedData.Image;
+                carToUpdate.Owner = updatedData.Owner;
                 _db.SaveChanges();
             }
             else

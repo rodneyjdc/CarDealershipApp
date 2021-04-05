@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Form, Button, Row, Col } from 'react-bootstrap'
 import { Card } from "react-bootstrap";
 import { connect } from "react-redux";
-import { changeADMINSTATUS, changeLOGINSTATUS, changeUSERNAME, changeFIRSTNAME, changeCURRENTUSER } from "../redux/store"
+import { changeADMINSTATUS, changeLOGINSTATUS, changeCURRENTUSER } from "../redux/store"
 import { Redirect } from "react-router";
 import { Link } from 'react-router-dom'
 
@@ -97,18 +97,12 @@ export class Login extends React.Component {
     }
 
     render() {
-        // console.log(this.props);
-        // console.log("this.props.username", this.props.username);
         return this.props.loggedIn ?
             (
                 <>
                     <Redirect
                         to={{
                             pathname: "/inventory",
-                            // state: {
-                            //     name: this.state.firstName,
-                            //     user: this.state.user
-                            // }
                         }}
                     />
                 </>
@@ -123,13 +117,11 @@ export class Login extends React.Component {
                                     <Card.Body>
                                         <Form>
                                             <Form.Control type="input" placeholder="username"
-                                                onChange={e => this.updateInput(e)}
-                                                //    value={this.state.input} 
+                                                onChange={e => this.updateInput(e)} 
                                                 name="userName" />
                                             <br></br>
                                             <Form.Control type="password" placeholder="password"
                                                 onChange={e => this.updateInput(e)}
-                                                //  value={this.state.input}
                                                 name="password" />
                                         </Form>
                                     </Card.Body>

@@ -25,30 +25,37 @@ namespace ServicesTests
 
                 // --------------------------------------------------------
                 // Seed data for cars
-                context.Cars.Add(new Car { 
-                    CarId = 1, 
-                    Name = "Car 1", 
-                    Price = 2018, 
-                    Location = "Action", 
-                    Seller = "Valentin", 
-                    Image = "", 
-                    Date = new DateTime(2021, 01, 01) });
                 
                 context.Cars.Add(new Car { 
                     CarId = 2, 
-                    Name = "Car 2", 
+                    Make = "Car 1", 
+                    Model = "Car 1", 
+                    Year = 2000,
+                    Color = "blue",
                     Price = 6000, 
-                    Location = "Maryland", 
-                    Seller = "Vandit", 
+                    Owner = "Valentin", 
                     Image = "", 
                     Date = new DateTime(2021, 01, 01) });
 
                 context.Cars.Add(new Car { 
-                    CarId = 3, 
-                    Name = "Car 3", 
-                    Price = 1245, 
-                    Location = "Italia", 
-                    Seller = "Rodney", 
+                    CarId = 2, 
+                    Make = "Car 2", 
+                    Model = "Car 2", 
+                    Year = 2000,
+                    Color = "blue",
+                    Price = 6000, 
+                    Owner = "Vandit", 
+                    Image = "", 
+                    Date = new DateTime(2021, 01, 01) });
+
+                context.Cars.Add(new Car { 
+                    CarId = 2, 
+                    Make = "Car 2", 
+                    Model = "Car 2", 
+                    Year = 2000,
+                    Color = "blue",
+                    Price = 6000, 
+                    Owner = "Rodney", 
                     Image = "", 
                     Date = new DateTime(2021, 01, 01) });
 

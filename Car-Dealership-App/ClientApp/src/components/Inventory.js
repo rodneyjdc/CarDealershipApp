@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import CustomerCarForm from './CustomerCarForm';
 import { Card, Container, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { createNoSubstitutionTemplateLiteral } from 'typescript';
-import { NavMenu } from './NavMenu';
+// import { createNoSubstitutionTemplateLiteral } from 'typescript';
+// import { NavMenu } from './NavMenu';
 
 export class Inventory extends Component {
   static displayName = Inventory.name;

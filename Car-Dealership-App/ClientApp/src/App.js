@@ -6,6 +6,7 @@ import { Home } from './components/Home';
 import { Inventory } from './components/Inventory';
 import { UserProfile } from './components/UserProfile';
 import Login  from './components/Login';
+import Logout  from './components/Logout';
 import AcceptanceRules from './components/AcceptanceRules';
 
 
@@ -27,6 +28,7 @@ export default class App extends Component {
         <Route path='/acceptanceRules' component={AcceptanceRules} />
         <Route path='/signUp' component={SignUp} />
         <Route path='/login' component={Login} />
+        <Route path='/logout' component={Logout} />
       </Layout>
     );
   }

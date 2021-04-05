@@ -11,7 +11,7 @@ using dotnetwebapi.Models;
 namespace dotnetwebapi.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("dotnetApi/[controller]")]
     public class CarController : ControllerBase
     {
         private readonly IService<Car> _carService;

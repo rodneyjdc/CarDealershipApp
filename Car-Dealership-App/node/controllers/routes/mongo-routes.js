@@ -26,7 +26,7 @@ router.post("/bulk", ({ body }, res) => {
 
 router.get("/api/cars", (req, res) => {
   Listing.find({})
-    .sort({ date: -1 })
+    // .sort({ date: -1 })
     .then((dbListing) => {
       res.json(dbListing);
     })

@@ -1,6 +1,5 @@
 import React from "react";
 import { Card, Container, Row } from 'react-bootstrap'
-import { Link } from "react-router-dom";
 
 export class UserProfile extends React.Component {
     state = {
