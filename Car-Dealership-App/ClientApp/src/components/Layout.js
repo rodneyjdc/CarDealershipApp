@@ -6,6 +6,7 @@ export class Layout extends Component {
   static displayName = Layout.name;
 
   render () {
+    console.log('Layout\'s this.props:', this.props);
     return (
       <div>
         <NavMenu />
